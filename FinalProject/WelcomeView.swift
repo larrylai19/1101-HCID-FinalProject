@@ -21,6 +21,7 @@ class DBHelper: ObservableObject {
     var firstGetData = false
     
     public func getCount() {
+
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
         FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("count").getDocument { snapshot, err in
@@ -45,6 +46,7 @@ class DBHelper: ObservableObject {
                     }
                 return
             }
+            
             self.c = Int(count["count"] as! String) ?? 0
         }
     }
@@ -56,7 +58,6 @@ class DBHelper: ObservableObject {
         self.Count.removeAll()
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         getCount()
-        print(self.c)
         for index in 0...self.c {
                 FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("event"+String(index)).getDocument { snapshot, err in
                     if let err = err {
@@ -72,7 +73,7 @@ class DBHelper: ObservableObject {
                         self.firstGetData = true
                         return
                     }
-                    print(data)
+                //    print(data)
 //                    for e in data {
 //                        self.userData.append(DataDetail(k: e.key, v: "\(e.value)"))
 //                        self.uploadData[e.key] = e.value as! String
@@ -184,20 +185,17 @@ struct WelcomeView: View {
     }
 
     var body: some View {
-        VStack {
+        HStack{
+            NavigationLink {
+                HomeView(viewModel: HomeViewModel())
+            } label: {
+                Image(systemName: "arrow.backward.to.line")
+                    .position(x: 10.0, y: 0.0)
+            }
             Text("Login Success \(uid)\n\(email)")
                 .navigationBarHidden(true)
-
-//            Group {
-//                TextField("key", text: $key)
-//                    .disableAutocorrection(true)
-//                    .autocapitalization(.none)
-//                TextField("val", text: $val)
-//                    .disableAutocorrection(true)
-//                    .autocapitalization(.none)
-//            }
-//            .padding(.horizontal, 10)
-
+        }
+        VStack {
             Form {
                 Section(header: Text("請輸入事件")) {
                     TextField("Activity", text:$val)
@@ -240,27 +238,6 @@ struct WelcomeView: View {
                     Text("Sign Out")
                 }
             }
-
-//            Button {
-//                dBHP.AddData(key: self.key, val: self.val)
-//                dBHP.AddData(key: self.key1, val: self.val1)
-//                dBHP.AddData(key: self.key2, val: self.val2)
-//            } label: {
-//                Text("Upload")
-//            }
-//
-//            Button {
-//                dBHP.GetData()
-//            } label: {
-//                Text("get")
-//            }
-//
-//            Button {
-//                try! FirebaseManager.shared.auth.signOut()
-//                self.isLogin = false
-//            } label: {
-//                Text("Sign Out")
-//            }
 
             if let errMsg = dBHP.errMsg {
                 Text(errMsg)

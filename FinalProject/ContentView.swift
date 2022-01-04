@@ -19,7 +19,8 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if (isLogin) {
-                    WelcomeView()
+                   HomeView(viewModel: HomeViewModel())
+                   //WelcomeView()
                 }
                 else {
                     SignUpView()
