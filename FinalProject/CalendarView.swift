@@ -1,10 +1,17 @@
 import SwiftUI
 import FSCalendar
 
+func stringConvertDate1(string:String, dateFormat:String="yyyy-MM-dd") -> Date{
+    let dateFormatter = DateFormatter.init()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    let date = dateFormatter.date(from: string)
+    return date!
+}
+
 struct CalendarView: UIViewRepresentable{
     var calendar: FSCalendar
     @Binding var isCalendarExpanded: Bool
-    
+    @ObservedObject var dBHP = DBHelper()
     func makeUIView(context: Context) -> FSCalendar {
         calendar
     }
@@ -12,6 +19,7 @@ struct CalendarView: UIViewRepresentable{
     func updateUIView(_ uiView: FSCalendar, context: Context) {
         let scope:FSCalendarScope = isCalendarExpanded ? .month : .week
         uiView.setScope(scope,animated:false)
+        
     }
     
 //    func makeCoordinator() -> Coordinator {

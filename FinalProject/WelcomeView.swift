@@ -17,7 +17,12 @@ class DBHelper: ObservableObject {
     @Published var errMsg: String? = nil
     @Published var uploadData = [String: Any]()
     @Published var Count = [String: Any]()
-    @Published var c:Int = 0
+    @Published var c:Int = 0 {
+        willSet {
+            print("old: \(c), new: \(newValue)")
+        }
+    }
+    
     var firstGetData = false
     
     public func getCount() {
@@ -46,18 +51,19 @@ class DBHelper: ObservableObject {
                     }
                 return
             }
-            
             self.c = Int(count["count"] as! String) ?? 0
+            print(self.c)
         }
     }
     
     public func GetData() {
+//        getCount()
+        print("GETDATA(C): \(self.c)")
         self.errMsg = nil
         self.userData.removeAll()
         self.uploadData.removeAll()
         self.Count.removeAll()
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        getCount()
         for index in 0...self.c {
                 FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("event"+String(index)).getDocument { snapshot, err in
                     if let err = err {
@@ -73,17 +79,17 @@ class DBHelper: ObservableObject {
                         self.firstGetData = true
                         return
                     }
-                //    print(data)
+//                    print(data)
 //                    for e in data {
 //                        self.userData.append(DataDetail(k: e.key, v: "\(e.value)"))
 //                        self.uploadData[e.key] = e.value as! String
 //                    }
                     self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String , l:data["DeadLine"] as! String))
-                    
+//                    print(self.userData)
                     self.firstGetData = true
-                    print(self.userData)
                 }
         }
+        self.firstGetData = true
     }
     
     public func AddData(act: String, len: String, dd:String ) {
@@ -91,6 +97,7 @@ class DBHelper: ObservableObject {
         self.errMsg = nil
         if self.firstGetData == false {
             self.errMsg = "Get data first!"
+            print("ERR")
             return
         }
 
@@ -158,7 +165,7 @@ struct WelcomeView: View {
     var uid = FirebaseManager.shared.auth.currentUser != nil ? FirebaseManager.shared.auth.currentUser?.uid as! String : ""
     var email = FirebaseManager.shared.auth.currentUser?.email as! String
 
-    @ObservedObject var dBHP = DBHelper()
+    @ObservedObject var dBHP: DBHelper
     @State var key = "Activity"
     @State var val = ""
     @State var key1 = "Length"
@@ -176,26 +183,10 @@ struct WelcomeView: View {
         let date = formatter.string(from: date)
         return date.components(separatedBy: " ").first!
     }
-    
-    init() {
-        if FirebaseManager.shared.auth.currentUser != nil {
-            dBHP.getCount()
-            dBHP.GetData()
-        }
-    }
 
     var body: some View {
-        HStack{
-            NavigationLink {
-                HomeView(viewModel: HomeViewModel())
-            } label: {
-                Image(systemName: "arrow.backward.to.line")
-                    .position(x: 10.0, y: 0.0)
-            }
-            Text("Login Success \(uid)\n\(email)")
-                .navigationBarHidden(true)
-        }
         VStack {
+            Text("Login Success \(email)")
             Form {
                 Section(header: Text("請輸入事件")) {
                     TextField("Activity", text:$val)
@@ -205,46 +196,41 @@ struct WelcomeView: View {
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                     DatePicker("DeadLine", selection: $dd, displayedComponents: .date)
-//                    TextField("DeadLine", text:$val2)
-//                        .disableAutocorrection(true)
-//                        .autocapitalization(.none)
-                }
-                
-                Button {
-                    print(dd)
-                    val2 = WelcomeView.DateConvertString(date: dd)
-                    print(val2)
-                    dBHP.AddData(act: val, len: val1, dd: val2)
-                } label: {
-                    Text("Upload")
-                }
-                
-                Button {
-                    dBHP.DeleteData()
-                } label: {
-                    Text("Delete")
-                }
-
-                Button {
-                    dBHP.GetData()
-                } label: {
-                    Text("get")
-                }
-
-                Button {
-                    try! FirebaseManager.shared.auth.signOut()
-                    self.isLogin = false
-                } label: {
-                    Text("Sign Out")
                 }
             }
-
-            if let errMsg = dBHP.errMsg {
-                Text(errMsg)
-                    .foregroundColor(Color.red)
-                    .padding(.top, 10)
+            Button {
+                print(dd)
+                val2 = WelcomeView.DateConvertString(date: dd)
+                print(val2)
+                dBHP.AddData(act: val, len: val1, dd: val2)
+            } label: {
+                Text("Upload")
             }
-
+            
+            Button {
+                dBHP.DeleteData()
+            } label: {
+                Text("Delete")
+            }
+            
+            Button {
+                dBHP.GetData()
+            } label: {
+                Text("get")
+            }
+            
+            Button {
+                try! FirebaseManager.shared.auth.signOut()
+                self.isLogin = false
+            } label: {
+                Text("Sign Out")
+            }
+//
+//            if let errMsg = dBHP.errMsg {
+//                Text(errMsg)
+//                    .foregroundColor(Color.red)
+//                    .padding(.top, 10)
+//            }
             List(dBHP.userData.indices, id: \.self) { idx in
                 Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
             }
@@ -253,8 +239,8 @@ struct WelcomeView: View {
 }
 
 
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
-    }
-}
+//struct WelcomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WelcomeView()
+//    }
+//}

@@ -14,9 +14,9 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var calendar = FSCalendar()
     @Published var isCalendarExpanded: Bool = true
     @Published var calendarHeight: CGFloat = 300.0
-    
     @Published var selectedDate: String = ""
-    
+    @ObservedObject var dBHP = DBHelper()
+
     override init() {
         super.init()
         
@@ -28,7 +28,6 @@ class HomeViewModel: NSObject, ObservableObject {
 }
 
 extension HomeViewModel: FSCalendarDelegate {
-    
     func calendar(_ calendar: FSCalendar,
                   didSelect date: Date,
                   at monthPosition: FSCalendarMonthPosition) {
@@ -40,19 +39,47 @@ extension HomeViewModel: FSCalendarDelegate {
                   animated: Bool) {
         calendarHeight = bounds.height
     }
+    
+    
 }
 
 extension HomeViewModel: FSCalendarDataSource {
-    
     func calendar(_ calendar: FSCalendar,
                   numberOfEventsFor date: Date) -> Int {
         numberOfEvent(for: date)
     }
+//    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+//        let dateString = self.dateFormatter.string(from: date)
+//
+//        if self.datesWithEvent.contains(dateString) {
+//            return 1
+//        }
+//        if self.datesWithMultipleEvents.contains(dateString) {
+//            return 3
+//        }
+//        return 0
+//    }
+//
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
+//        let key = self.dateFormatter.string(from: date)
+//        if self.datesWithMultipleEvents.contains(key) {
+//            return [UIColor.magenta, appearance.eventDefaultColor, UIColor.black]
+//        }
+//        return nil
+//    }
 }
 
 private extension HomeViewModel {
     func numberOfEvent(for date: Date) -> Int {
-        /// some logic here
+//        let dateString = self.dateFormatter.string(from: date)
+//
+//        if self.datesWithEvent.contains(dateString) {
+//            return 1
+//        }
+//        if self.datesWithMultipleEvents.contains(dateString) {
+//            return 3
+//        }
+        //do sth
         return 0
     }
     

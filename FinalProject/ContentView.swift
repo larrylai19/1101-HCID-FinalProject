@@ -19,7 +19,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if (isLogin) {
-                   HomeView(viewModel: HomeViewModel())
+                   HomeView()
                    //WelcomeView()
                 }
                 else {

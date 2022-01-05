@@ -7,9 +7,21 @@
 
 import SwiftUI
 
+func stringConvertDate(string:String, dateFormat:String="yyyy-MM-dd") -> Date{
+    let dateFormatter = DateFormatter.init()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    let date = dateFormatter.date(from: string)
+    return date!
+}
+
 struct HomeView: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @ObservedObject var viewModel = HomeViewModel()
     @ObservedObject var dBHP = DBHelper()
+    
+    init() {
+        self.dBHP.getCount()
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -23,23 +35,24 @@ struct HomeView: View {
                 List(dBHP.userData.indices, id: \.self) { idx in
                     Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
                 }
+                Text(viewModel.selectedDate)
+                    .padding()
                 Spacer()
                 HStack{
                     Button(action: {
-                        dBHP.getCount()
+//                        dBHP.getCount()
+                        print("homeview: \(dBHP.c)")
                         dBHP.GetData()
                     }, label: {
-                        Text("Show")
+                        Text("Show All")
                     })
                     
                     NavigationLink {
-                        WelcomeView()
+                        WelcomeView(dBHP: self.dBHP)
                     } label: {
                         Text("Add")
                     }
                 }
-                Text(viewModel.selectedDate)
-                    .padding()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -67,10 +80,10 @@ private final class MockedViewModel: HomeViewModel {
     
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(viewModel: HomeViewModel())
-    }
-}
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView(viewModel: HomeViewModel())
+//    }
+//}
 
 #endif
