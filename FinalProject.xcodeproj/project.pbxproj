@@ -23,6 +23,7 @@
 		46509BDE2765F7190079B27B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BDD2765F7190079B27B /* FirebaseManager.swift */; };
 		46509BE02765F8800079B27B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BDF2765F8800079B27B /* SignUpView.swift */; };
 		46509BE22765F8F60079B27B /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BE12765F8F60079B27B /* SignInView.swift */; };
+		4658C26E2787324600F52040 /* DailyScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4658C26D2787324500F52040 /* DailyScheduleView.swift */; };
 		46FB6AEE276914BA00CFFBBB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 46FB6AED276914BA00CFFBBB /* FirebaseAuth */; };
 		46FB6AF0276914BA00CFFBBB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 46FB6AEF276914BA00CFFBBB /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		46509BDD2765F7190079B27B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		46509BDF2765F8800079B27B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		46509BE12765F8F60079B27B /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		4658C26D2787324500F52040 /* DailyScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleView.swift; sourceTree = "<group>"; };
 		6FFACDF7F2AFBE96CE5D86C9 /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		C1B9191BD85F0F192D7C6559 /* Pods_FinalProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -97,6 +99,7 @@
 				46509BDF2765F8800079B27B /* SignUpView.swift */,
 				462D4247275B652200FC113C /* FormFieldView.swift */,
 				462D4236275B53B000FC113C /* ContentView.swift */,
+				4658C26D2787324500F52040 /* DailyScheduleView.swift */,
 				460A0497278313AA006F3BED /* HomeViewModel.swift */,
 				462D424D275C8E5300FC113C /* CalendarView.swift */,
 				460A0499278313E9006F3BED /* HomeView.swift */,
@@ -262,6 +265,7 @@
 				460A0498278313AA006F3BED /* HomeViewModel.swift in Sources */,
 				462D424A275B666F00FC113C /* RequirementTextView.swift in Sources */,
 				46509BE22765F8F60079B27B /* SignInView.swift in Sources */,
+				4658C26E2787324600F52040 /* DailyScheduleView.swift in Sources */,
 				462D4235275B53B000FC113C /* FinalProjectApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

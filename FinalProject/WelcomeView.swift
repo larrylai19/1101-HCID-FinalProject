@@ -173,6 +173,9 @@ struct WelcomeView: View {
     @State var key2 = "DeadLine"
     @State var val2 = ""
     @State var dd = Date()
+    let hours = [
+        "1","2","3","4","5","6","7","8","9","10","11","12"
+    ]
     
     static func DateConvertString(date:Date,dateFormat:String="yyyy-MM-dd") ->String{
         let timeZone = TimeZone.init(identifier: "UTC")
@@ -192,9 +195,14 @@ struct WelcomeView: View {
                     TextField("Activity", text:$val)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
-                    TextField("Length", text:$val1)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
+                    Picker(selection: $val1) {
+                        ForEach(hours, id: \.self) { hour in
+                            Text(hour)
+                        }
+                    } label: {
+                        Text("選擇時間（小時）")
+                    }
+                    
                     DatePicker("DeadLine", selection: $dd, displayedComponents: .date)
                 }
             }

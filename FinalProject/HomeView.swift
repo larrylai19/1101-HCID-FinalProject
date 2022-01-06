@@ -7,16 +7,10 @@
 
 import SwiftUI
 
-func stringConvertDate(string:String, dateFormat:String="yyyy-MM-dd") -> Date{
-    let dateFormatter = DateFormatter.init()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    let date = dateFormatter.date(from: string)
-    return date!
-}
-
 struct HomeView: View {
-    @ObservedObject var viewModel = HomeViewModel()
     @ObservedObject var dBHP = DBHelper()
+    @ObservedObject var viewModel = HomeViewModel()
+    var date = Date()
     
     init() {
         self.dBHP.getCount()
@@ -32,20 +26,41 @@ struct HomeView: View {
                 
                 Spacer()
                 Text("To-do List")
-                List(dBHP.userData.indices, id: \.self) { idx in
-                    Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
+                if(viewModel.all)
+                {
+                    List(dBHP.userData.indices, id: \.self) { idx in
+                        Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
+                    }
                 }
-                Text(viewModel.selectedDate)
-                    .padding()
+                else {
+                    List(viewModel.selectedEvent.indices, id: \.self) { idx in
+                        Text("Activity:\(viewModel.selectedEvent[idx])")
+                    }
+                }
                 Spacer()
                 HStack{
                     Button(action: {
 //                        dBHP.getCount()
                         print("homeview: \(dBHP.c)")
+                        viewModel.all = true
                         dBHP.GetData()
                     }, label: {
                         Text("Show All")
                     })
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        print(dBHP.userData.count)
+                        for i in 0..<dBHP.userData.count{
+                            self.viewModel.updateArray(day: dBHP.userData[i].l, activity: dBHP.userData[i].k)
+                        }
+                        viewModel.calendar.reloadData()
+                    }, label: {
+                        Text("update")
+                    })
+                    
+                    Spacer()
                     
                     NavigationLink {
                         WelcomeView(dBHP: self.dBHP)
