@@ -14,6 +14,7 @@ struct HomeView: View {
     
     init() {
         self.dBHP.getCount()
+        self.dBHP.getAvaliable()
     }
     
     var body: some View {
@@ -51,7 +52,9 @@ struct HomeView: View {
                     Spacer()
                     
                     Button(action: {
-                        print(dBHP.userData.count)
+                        //print(dBHP.userData.count)
+                        viewModel.de.removeAll()
+                        viewModel.datesArray.removeAll()
                         for i in 0..<dBHP.userData.count{
                             self.viewModel.updateArray(day: dBHP.userData[i].l, activity: dBHP.userData[i].k)
                         }
@@ -66,6 +69,14 @@ struct HomeView: View {
                         WelcomeView(dBHP: self.dBHP)
                     } label: {
                         Text("Add")
+                    }
+                    
+                    Spacer()
+                    
+                    NavigationLink {
+                        DailyScheduleView(dBHP: self.dBHP)
+                    } label: {
+                        Text("Daily")
                     }
                 }
             }

@@ -17,6 +17,8 @@ class DBHelper: ObservableObject {
     @Published var errMsg: String? = nil
     @Published var uploadData = [String: Any]()
     @Published var Count = [String: Any]()
+    @Published var avaliable = [String: Bool]()
+    @Published var freetime = [Bool]()
     @Published var c:Int = 0 {
         willSet {
             print("old: \(c), new: \(newValue)")
@@ -24,6 +26,56 @@ class DBHelper: ObservableObject {
     }
     
     var firstGetData = false
+    
+    
+    public func getAvaliable() {
+        
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        freetime.removeAll()
+        FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("avaliable").getDocument { snapshot, err in
+            if let err = err {
+                print("Failed: \(err)")
+                self.errMsg = "\(err)"
+                return
+            }
+            
+            guard let Free = snapshot?.data() else {
+                print("No Freetime found")
+                self.errMsg = "No Freetime found"
+                //self.firstGetData = true
+                for i in 0...23 {
+                    if(i < 10){
+                        self.avaliable["0"+String(i)+":00"] = true
+                    }
+                    else{
+                        self.avaliable[String(i)+":00"] = true
+                    }
+                    self.freetime.append(true)
+                }
+                FirebaseManager.shared.firestore.collection("users")
+                    .document(uid).collection("events").document("avaliable").setData(self.avaliable) { [self] err in
+                        if let err = err {
+                            print(err)
+                            return
+                        }
+                    }
+                return
+            }
+            if(self.freetime.count != 24){
+                for i in 0...23 {
+                    if(i < 10){
+                        self.freetime.append(Free["0"+String(i)+":00"] as! Bool )
+                    }
+                    else{
+                        self.freetime.append(Free[String(i)+":00"] as! Bool )
+                    }
+                }
+            }
+            else{
+                print(self.freetime)
+            }
+        }
+    }
     
     public func getCount() {
 
@@ -40,7 +92,7 @@ class DBHelper: ObservableObject {
             guard let count = snapshot?.data() else {
                 print("No count found")
                 self.errMsg = "No data found"
-                self.firstGetData = true
+                //self.firstGetData = true
                 self.Count["count"] = "0"
                 FirebaseManager.shared.firestore.collection("users")
                     .document(uid).collection("events").document("count").setData(self.Count) { [self] err in
@@ -141,7 +193,6 @@ class DBHelper: ObservableObject {
         getCount()
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         self.userData.removeAll()
-        
         for i in 0...self.c{
         FirebaseManager.shared.firestore.collection("users")
                 .document(uid).collection("events").document("event"+String(i)).delete()

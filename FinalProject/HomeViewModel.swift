@@ -29,17 +29,12 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var all: Bool = false
     @Published var calendarHeight: CGFloat = 300.0
     @Published var selectedDate: String = ""
-    @Published var datesArray = [""]
+    @Published var datesArray = [String]()
     @Published var de = [dayEvent]()
-    @Published var selectedEvent = [""]
+    @Published var selectedEvent = [String]()
     
     func updateArray(day:String,activity:String) {
-        if(datesArray[0] == ""){
-            datesArray[0] = day
-        }
-        else{
-            datesArray.append(day)
-        }
+        datesArray.append(day)
         self.de.append(dayEvent(day: day, act: activity))
     }
     
@@ -104,10 +99,10 @@ extension HomeViewModel: FSCalendarDataSource {
         dateFormatter3.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter3.string(from: date)
         
-        print("Dates array at numberOfEvents: ", datesArray)
-        print("EventArray",de)
-        print("DateString: ", dateString)
-        
+//        print("Dates array at numberOfEvents: ", datesArray)
+//        print("EventArray",de)
+//        print("DateString: ", dateString)
+//
         //render dots if there is an event on that day
         if self.datesArray.contains(dateString){
             return 1
