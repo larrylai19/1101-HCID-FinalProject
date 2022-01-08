@@ -19,6 +19,7 @@
 		462D424A275B666F00FC113C /* RequirementTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D4249275B666F00FC113C /* RequirementTextView.swift */; };
 		462D424C275B680000FC113C /* UserRegistrationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D424B275B680000FC113C /* UserRegistrationModel.swift */; };
 		462D424E275C8E5300FC113C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D424D275C8E5300FC113C /* CalendarView.swift */; };
+		4631C3ED2789DE28008DBCE8 /* MaximumFlowClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4631C3EC2789DE28008DBCE8 /* MaximumFlowClass.swift */; };
 		46509BDC27652B240079B27B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BDB27652B240079B27B /* WelcomeView.swift */; };
 		46509BDE2765F7190079B27B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BDD2765F7190079B27B /* FirebaseManager.swift */; };
 		46509BE02765F8800079B27B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46509BDF2765F8800079B27B /* SignUpView.swift */; };
@@ -44,6 +45,7 @@
 		462D4249275B666F00FC113C /* RequirementTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementTextView.swift; sourceTree = "<group>"; };
 		462D424B275B680000FC113C /* UserRegistrationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegistrationModel.swift; sourceTree = "<group>"; };
 		462D424D275C8E5300FC113C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		4631C3EC2789DE28008DBCE8 /* MaximumFlowClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaximumFlowClass.swift; sourceTree = "<group>"; };
 		46509BDB27652B240079B27B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		46509BDD2765F7190079B27B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		46509BDF2765F8800079B27B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				460A0499278313E9006F3BED /* HomeView.swift */,
 				46B93F582789B44E008B69CD /* DailyView.swift */,
 				46509BDB27652B240079B27B /* WelcomeView.swift */,
+				4631C3EC2789DE28008DBCE8 /* MaximumFlowClass.swift */,
 				462D424B275B680000FC113C /* UserRegistrationModel.swift */,
 				462D4249275B666F00FC113C /* RequirementTextView.swift */,
 				46509BDD2765F7190079B27B /* FirebaseManager.swift */,
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				462D4237275B53B000FC113C /* ContentView.swift in Sources */,
+				4631C3ED2789DE28008DBCE8 /* MaximumFlowClass.swift in Sources */,
 				462D424E275C8E5300FC113C /* CalendarView.swift in Sources */,
 				460A049A278313E9006F3BED /* HomeView.swift in Sources */,
 				462D424C275B680000FC113C /* UserRegistrationModel.swift in Sources */,

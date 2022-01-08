@@ -83,6 +83,7 @@ struct DailyScheduleView: View {
     @State var TotalLength = 0
     @State var emptysection = [Int]()
     @State var eventsection = [Int]()
+    var mfc = MaximumFlowClass()
     let serialQueue = DispatchQueue(label: "com.waynestalk.serial")
     var body: some View {
         Text("今天日程"+showToday(today:day))
@@ -166,6 +167,20 @@ struct DailyScheduleView: View {
                         AvaSection(dbhp: dBHP, section: &emptysection)
                         EventSection(dbhp: dBHP, section: &eventsection)
                         //schedule(dbhp: dBHP, total: &TotalLength)
+                        mfc.setData(activityTime: eventsection, availTime: emptysection)
+                        print("activitytime",eventsection)
+                        print("availTime",emptysection)
+                        mfc.maximumFlow()
+                        if mfc.isVaild() {
+                            let ret = mfc.getResult()
+                            for (i, j) in ret {
+                                print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
+                            }
+                        }
+                        else {
+                            print("時間給的不夠，重新輸入")
+                        }
+                        
                     }, label: {
                         Text("Schedule")
                     })
