@@ -77,33 +77,14 @@ extension HomeViewModel: FSCalendarDelegate {
         }
     }
     
-//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-//        let dateFormatter3 = DateFormatter()
-//        dateFormatter3.dateFormat = "yyyy-MM-dd"
-//        let dateString = dateFormatter3.string(from: date)
-//        if self.datesArray.contains(dateString) {
-//            return [UIColor.blue]
-//        }
-//        return [UIColor.white]
-//    }
-//
 }
 
 extension HomeViewModel: FSCalendarDataSource {
-//    func calendar(_ calendar: FSCalendar,
-//                  numberOfEventsFor date: Date) -> Int {
-//        numberOfEvent(for: date)
-//    }
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let dateFormatter3 = DateFormatter()
         dateFormatter3.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter3.string(from: date)
         
-//        print("Dates array at numberOfEvents: ", datesArray)
-//        print("EventArray",de)
-//        print("DateString: ", dateString)
-//
-        //render dots if there is an event on that day
         if self.datesArray.contains(dateString){
             return 1
         }else{

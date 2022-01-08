@@ -9,11 +9,28 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var dBHP = DBHelper()
+//    {
+//        didSet {
+//            print("DeBug:\(oldValue)\nd\(dBHP)")
+//        }
+//    }
     @ObservedObject var viewModel = HomeViewModel()
+    let serialQueue1 = DispatchQueue(label: "com.waynestalk.serial")
     var date = Date()
     
     init() {
-        self.dBHP.getCount()
+        serialQueue1.sync {
+            self.dBHP.getCount()
+            print("Count",dBHP.c)
+        }
+        
+        serialQueue1.sync {
+            self.dBHP.GetData()
+            print("Count",dBHP.c)
+        }
+        serialQueue1.sync {
+            self.viewModel.all = true
+        }
         self.dBHP.getAvaliable()
     }
     

@@ -19,6 +19,8 @@ class DBHelper: ObservableObject {
     @Published var Count = [String: Any]()
     @Published var avaliable = [String: Bool]()
     @Published var freetime = [Bool]()
+    @Published var timesection = ["00:00~01:00","01:00~02:00","02:00~03:00","03:00~04:00","04:00~05:00","05:00~06:00","06:00~07:00","07:00~08:00","08:00~09:00","09:00~10:00","10:00~11:00","11:00~12:00","12:00~13:00","13:00~14:00","14:00~15:00","15:00~16:00","16:00~17:00","17:00~18:00" ,"18:00~19:00","19:00~20:00","20:00~21:00","21:00~22:00","22:00~23:00","23:00~00:00"
+        ]
     @Published var c:Int = 0 {
         willSet {
             print("old: \(c), new: \(newValue)")
@@ -27,12 +29,17 @@ class DBHelper: ObservableObject {
     
     var firstGetData = false
     
+    public func priority(){
+        self.userData.sort {
+            $0.l < $1.l
+        }
+    }
     
     public func getAvaliable() {
         
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         freetime.removeAll()
-        FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("avaliable").getDocument { snapshot, err in
+        FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("avaliable").getDocument { [self] snapshot, err in
             if let err = err {
                 print("Failed: \(err)")
                 self.errMsg = "\(err)"
@@ -44,12 +51,7 @@ class DBHelper: ObservableObject {
                 self.errMsg = "No Freetime found"
                 //self.firstGetData = true
                 for i in 0...23 {
-                    if(i < 10){
-                        self.avaliable["0"+String(i)+":00"] = true
-                    }
-                    else{
-                        self.avaliable[String(i)+":00"] = true
-                    }
+                    self.avaliable[self.timesection[i]] = true
                     self.freetime.append(true)
                 }
                 FirebaseManager.shared.firestore.collection("users")
@@ -61,18 +63,13 @@ class DBHelper: ObservableObject {
                     }
                 return
             }
-            if(self.freetime.count != 24){
+            
+            
+            if(self.freetime.count <= 24){
                 for i in 0...23 {
-                    if(i < 10){
-                        self.freetime.append(Free["0"+String(i)+":00"] as! Bool )
-                    }
-                    else{
-                        self.freetime.append(Free[String(i)+":00"] as! Bool )
-                    }
+                    self.freetime.append(Free[self.timesection[i]] as! Bool )
+                    self.avaliable[self.timesection[i]] = Free[self.timesection[i]] as! Bool
                 }
-            }
-            else{
-                print(self.freetime)
             }
         }
     }
@@ -138,6 +135,8 @@ class DBHelper: ObservableObject {
 //                    }
                     self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String , l:data["DeadLine"] as! String))
 //                    print(self.userData)
+                    self.priority()
+                    print(self.userData)
                     self.firstGetData = true
                 }
         }
