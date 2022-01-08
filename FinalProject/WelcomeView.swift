@@ -1,10 +1,3 @@
-//
-//  WelcomeView.swift
-//  FinalProject
-//
-//  Created by Larry - 1024 on 2021/12/12.
-//
-
 import SwiftUI
 struct DataDetail{
     var k = ""
@@ -12,8 +5,10 @@ struct DataDetail{
     var l = ""
 }
 
+
 class DBHelper: ObservableObject {
     @Published var userData = [DataDetail]()
+    @Published var FreeTimeData = [DataDetail]()
     @Published var errMsg: String? = nil
     @Published var uploadData = [String: Any]()
     @Published var Count = [String: Any]()
@@ -27,11 +22,48 @@ class DBHelper: ObservableObject {
         }
     }
     
+    @Published var f:Int = 0 {
+        willSet {
+            print("old: \(f), new: \(newValue)")
+        }
+    }
+    
     var firstGetData = false
     
     public func priority(){
         self.userData.sort {
             $0.l < $1.l
+        }
+    }
+    
+    public func GetFreeTimeData() {
+        //        getCount()
+        print("GETDATA(C): \(self.f)")
+        self.errMsg = nil
+        self.FreeTimeData.removeAll()
+        self.uploadData.removeAll()
+        self.Count.removeAll()
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        for index in 0...self.f {
+            FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("Free"+String(index)).getDocument { snapshot, err in
+                if let err = err {
+                    print("Failed: \(err)")
+                    self.errMsg = "\(err)"
+                    return
+                }
+                
+                
+                guard let data = snapshot?.data() else {
+                    print("No Freedata found")
+                    self.errMsg = "No Freedata found"
+                    //self.firstGetData = true
+                    return
+                }
+                
+                self.FreeTimeData.append(DataDetail(k: data["Date"] as! String, v: data["Start"] as! String , l:data["End"] as! String))
+                //                    print(self.userData)
+                //self.firstGetData = true
+            }
         }
     }
     
@@ -105,6 +137,37 @@ class DBHelper: ObservableObject {
         }
     }
     
+    public func getFreeCount() {
+        
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        
+        FirebaseManager.shared.firestore.collection("users").document(uid).collection("events").document("Freecount").getDocument { snapshot, err in
+            if let err = err {
+                print("Failed: \(err)")
+                self.errMsg = "\(err)"
+                return
+            }
+            
+            
+            guard let count = snapshot?.data() else {
+                print("No Freecount found")
+                self.errMsg = "No Freedata found"
+                //self.firstGetData = true
+                self.Count["count"] = "0"
+                FirebaseManager.shared.firestore.collection("users")
+                    .document(uid).collection("events").document("Freecount").setData(self.Count) { [self] err in
+                        if let err = err {
+                            print(err)
+                            return
+                        }
+                    }
+                return
+            }
+            self.f = Int(count["count"] as! String) ?? 0
+            print(self.f)
+        }
+    }
+    
     public func GetData() {
 //        getCount()
         print("GETDATA(C): \(self.c)")
@@ -145,6 +208,7 @@ class DBHelper: ObservableObject {
     
     public func AddData(act: String, len: String, dd:String ) {
         getCount()
+        uploadData.removeAll()
         self.errMsg = nil
         if self.firstGetData == false {
             self.errMsg = "Get data first!"
@@ -184,6 +248,60 @@ class DBHelper: ObservableObject {
                     return
                 }
                 print("Success add data \"num\": \"\(c)\"")
+            }
+    }
+    
+    public func AddFreeData(act: String, len: String, dd:String ) {
+        getFreeCount()
+        uploadData.removeAll()
+        self.errMsg = nil
+//        if self.firstGetFreeData == false {
+//            self.errMsg = "Get data first!"
+//            print("ERR")
+//            return
+//        }
+        
+        if act.isEmpty || len.isEmpty {
+            self.errMsg = "key or val is empty!"
+            return
+        }
+        
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        
+        if self.uploadData["Free"+String(self.f)] == nil {
+            self.FreeTimeData.append(DataDetail(k: act, v: len , l:dd))
+        }
+        print("FreeTimeEvent: ",act,len,dd)
+        self.uploadData["Date"] = act
+        self.uploadData["Start"] = len
+        self.uploadData["End"] = dd
+        
+        let subString = String(dd.prefix(2))
+        let subString1 = String(len.prefix(2))
+        if(dd == "00:00"){
+            self.uploadData["Length"] = String(24 - Int(subString1)!)
+        }
+        else{
+            self.uploadData["Length"] = String(Int(subString)! - Int(subString1)!)
+        }
+        
+        FirebaseManager.shared.firestore.collection("users")
+            .document(uid).collection("events").document("Free"+String(self.f)).setData(self.uploadData) { [self] err in
+                if let err = err {
+                    print(err)
+                    return
+                }
+                print("Success add data")
+            }
+        self.f += 1
+        self.Count["count"] = String(self.f)
+        FirebaseManager.shared.firestore.collection("users")
+            .document(uid).collection("events").document("Freecount").setData(self.Count) { [self] err in
+                if let err = err {
+                    print(err)
+                    return
+                }
+                print("Success add data \"num\": \"\(f)\"")
             }
     }
     

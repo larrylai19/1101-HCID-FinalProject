@@ -43,20 +43,21 @@ struct SignUpView: View {
                 .font(.largeTitle)
                 .bold()
                 .padding(.bottom, 30)
-            
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+          
             FormFieldView(fieldName: "Email",
                           fieldValue: $userRegistrationViewModel.username,
                           isSecure: false)
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(false)
                 .autocapitalization(.none)
-            
+        
             FormFieldView(fieldName: "Password", fieldValue: $userRegistrationViewModel.password, isSecure: true)
             
             VStack {
                 RequirementTextView(
                     iconName: userRegistrationViewModel.isPasswordLengthValid ? "lock.open" : "lock",
-                    iconColor: userRegistrationViewModel.isPasswordLengthValid ? Color.green : Color.red,
+                    iconColor: userRegistrationViewModel.isPasswordLengthValid ? Color.green : Color(red: 82/255, green: 85/255, blue: 123/255),
                     text: "至少需有8個字元",
                     isStrikeThrough: userRegistrationViewModel.isPasswordLengthValid
                 )
@@ -64,7 +65,7 @@ struct SignUpView: View {
                 
                 RequirementTextView(
                     iconName: userRegistrationViewModel.isPasswordCapitalLetter ? "lock.open" : "lock",
-                    iconColor: userRegistrationViewModel.isPasswordCapitalLetter ?  Color.green : Color.red,
+                    iconColor: userRegistrationViewModel.isPasswordCapitalLetter ?  Color.green : Color(red: 82/255, green: 85/255, blue: 123/255),
                     text: "至少需有1個大寫字元",
                     isStrikeThrough: userRegistrationViewModel.isPasswordCapitalLetter
                 )
@@ -77,7 +78,7 @@ struct SignUpView: View {
             
             RequirementTextView(
                 iconName: userRegistrationViewModel.isPasswordConfirmValid ? "lock.open" : "lock",
-                iconColor:userRegistrationViewModel.isPasswordConfirmValid ? Color.green  : Color.red,
+                iconColor:userRegistrationViewModel.isPasswordConfirmValid ? Color.green  : Color(red: 82/255, green: 85/255, blue: 123/255),
                 text: "請再輸入一次相同的密碼",
                 isStrikeThrough: userRegistrationViewModel.isPasswordConfirmValid)
                 .padding()
@@ -114,7 +115,7 @@ struct SignUpView: View {
                     Text("Sign in")
                         .font(.body)
                         .bold()
-                        .foregroundColor(Color(red: 251/255, green: 128/255, blue: 128/255))
+                        .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                 }
             }.padding(.top, 50)
             Spacer()

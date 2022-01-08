@@ -42,10 +42,19 @@ struct SignInView: View {
 
     var body: some View {
         VStack {
+            Text("登入帳號")
+                .font(.largeTitle)
+                .bold()
+                .padding(.bottom, 30)
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+            Text("歡迎使用時間管理大師")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+
             FormFieldView(fieldName: "Email", fieldValue: $email, isSecure: false)
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+
             
             FormFieldView(fieldName: "Password", fieldValue: $password, isSecure: true)
                 .disableAutocorrection(true)
@@ -55,6 +64,10 @@ struct SignInView: View {
                 signInHP.LoginAccount(email: email, password: password)
             } label: {
                 Text("Sign In")
+                    .font(.body)
+                    .bold()
+                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .padding(.top, 30)
             }
             .alert(isPresented: $signInHP.showAlert) { () -> Alert in
                 Alert(title: Text("ERROR"), message: Text(signInHP.errMsg))

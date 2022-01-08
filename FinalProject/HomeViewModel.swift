@@ -46,6 +46,12 @@ class HomeViewModel: NSObject, ObservableObject {
         calendar.dataSource = self
         calendar.scope = isCalendarExpanded ? .month : .week
         calendar.firstWeekday = 2
+        calendar.appearance.headerTitleColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.todaySelectionColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.weekdayTextColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.eventDefaultColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.todayColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.selectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
     }
 }
 
