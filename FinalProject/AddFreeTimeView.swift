@@ -27,59 +27,73 @@ struct AddFreeTimeView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            Text("Input Free Time")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .bold()
+                .font(.system(size: 30))
+                .padding(.top, 100)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Spacer()
             Form {
-                Section(header: Text("Input Free Time")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                            .bold()
-                            .font(.system(size: 30))
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .center)) {
-                    DatePicker("FreeTime", selection: $dd, displayedComponents: .date)
-                        .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))                    
-                    Picker(selection: $val1) {
-                        ForEach(hours, id: \.self) { hour in
-                            Text(hour)
-                        }
-                    } label: {
-                        Text("Start Time")
-                        .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
+                DatePicker("FreeTime", selection: $dd, displayedComponents: .date)
+                    .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
+                Picker(selection: $val1) {
+                    ForEach(hours, id: \.self) { hour in
+                        Text(hour)
                     }
-                    
-                    Picker(selection: $val2) {
-                        ForEach(hours, id: \.self) { hour in
-                            Text(hour)
-                        }
-                    } label: {
-                        Text("End Time")
-                        .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
+                } label: {
+                    Text("Start Time")
+                    .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
+                }
+                
+                Picker(selection: $val2) {
+                    ForEach(hours, id: \.self) { hour in
+                        Text(hour)
                     }
+                } label: {
+                    Text("End Time")
+                    .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
                 }
                 
             }
+            .background(Color.white)
+            .onAppear { // ADD THESE
+                UITableView.appearance().backgroundColor = .clear
+            }
+            .frame(maxHeight: .infinity, alignment: .center)
+            .padding(.top, 100)
             
-            Button(action: {
-                val = WelcomeView.DateConvertString(date: dd)
-                dBHP.AddFreeData(act: val, len: val1, dd: val2)
-            }, label: {
-                Text("Upload")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-            })
+            NavigationLink {
+                HomeView()
+            } label: {
+                Button(action: {
+                    val = WelcomeView.DateConvertString(date: dd)
+                    dBHP.AddFreeData(act: val, len: val1, dd: val2)
+                }, label: {
+                    Text("Upload")
+                        .frame(width: 100, height: 40, alignment: .center)
+                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                        .font(.system(size: 18))
+                        .foregroundColor(.white)
+                        .cornerRadius(10.0)
+                })
+                .frame(maxHeight: .infinity, alignment: .center)
+                .padding(.top, 0)
+            }
             
-            
-            Button(action: {
-                dBHP.GetFreeTimeData()
-            }, label: {
-                Text("Get")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-            })
+//            Button(action: {
+//                dBHP.GetFreeTimeData()
+//            }, label: {
+//                Text("Get")
+//                    .frame(width: 100, height: 40, alignment: .center)
+//                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                    .font(.system(size: 18))
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10.0)
+//            })
+//            .frame(maxHeight: .infinity, alignment: .center)
+//            .padding(.top, 0)
         }
     }
 }

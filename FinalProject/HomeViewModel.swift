@@ -66,10 +66,10 @@ class HomeViewModel: NSObject, ObservableObject {
         //calendar.appearance.separators = .interRows
         
         
-        calendar.appearance.todaySelectionColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.appearance.todaySelectionColor = UIColor(red: 230/255, green: 108/255, blue: 114/255, alpha: 1)
         calendar.appearance.eventDefaultColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.todayColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
-        calendar.appearance.selectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        calendar.appearance.selectionColor = UIColor(red: 230/255, green: 108/255, blue: 114/255, alpha: 1)
         calendar.appearance.eventSelectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
         
         //outside frame

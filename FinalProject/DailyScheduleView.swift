@@ -87,107 +87,132 @@ struct DailyScheduleView: View {
     let serialQueue = DispatchQueue(label: "com.waynestalk.serial")
     
     var body: some View {
-        if(!EditMode){
-            VStack{
-                Text(showToday(today:day) + " Schedule")
-                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .fontWeight(.bold)
-                    .font(.system(size: 25))
-                List(times.indices, id: \.self) { idx in
-                    HStack{
-                        Text(times[idx])
-                        Spacer()
-                        Text(todolist[idx])
-                        Spacer()
-                    }
-                }
-                Button(action: {
-                    EditMode = true
-                }, label: {
-                    Text("Edit")
-                })
-            }
-        }
-        else{
-            VStack{
-                List(times.indices, id: \.self) { idx in
-                    HStack{
-                        Text(times[idx])
-                        Spacer()
-                        Button(action: {
-                            print(self.dBHP.avaliable)
-                            if(!self.dBHP.freetime[idx]){
-                                self.dBHP.freetime[idx] = true
-                                self.dBHP.avaliable[times[idx]] = true
-                            }
-                            else{
-                                self.dBHP.freetime[idx] = false
-                                self.dBHP.avaliable[times[idx]] = false
-                            }
-                            print(self.dBHP.avaliable)
-                        }, label: {
-                            if(!self.dBHP.freetime[idx]){
-                                Text("Rest")
-                            }
-                            else{
-                                Text("Free")
-                            }
-                        })
-                    }
-                }
-                
+        VStack{
+            Text(showToday(today:day) + " Schedule")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .fontWeight(.bold)
+                .font(.system(size: 25))
+            List(times.indices, id: \.self) { idx in
                 HStack{
-                    Button(action: {
-                       EditMode = false
-                        serialQueue.sync {
-                            self.dBHP.getAvaliable()
-                        }
-                        
-                        serialQueue.sync {
-                            guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-                            FirebaseManager.shared.firestore.collection("users")
-                                .document(uid).collection("events").document("avaliable").setData(self.dBHP.avaliable) { [self] err in
-                                    if let err = err {
-                                        print(err)
-                                        return
-                                    }
-                                }
-                        }
-                        
-                    }, label: {
-                        Text("Done")
-                    })
-                    
-                    //進行排程
-                    Button(action: {
-                        for i in 0..<dBHP.freetime.count{
-                            if(dBHP.freetime[i]){
-                                TotalLength+=1
-                            }
-                        }
-                        AvaSection(dbhp: dBHP, section: &emptysection)
-                        EventSection(dbhp: dBHP, section: &eventsection)
-                        //schedule(dbhp: dBHP, total: &TotalLength)
-                        mfc.setData(activityTime: eventsection, availTime: emptysection)
-                        print("activitytime",eventsection)
-                        print("availTime",emptysection)
-                        mfc.maximumFlow()
-                        if mfc.isVaild() {
-                            let ret = mfc.getResult()
-                            for (i, j) in ret {
-                                print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
-                            }
-                        }
-                        else {
-                            print("時間給的不夠，重新輸入")
-                        }
-                        
-                    }, label: {
-                        Text("Schedule")
-                    })
+                    Text(times[idx])
+                    Spacer()
+                    Text(todolist[idx])
+                    Spacer()
                 }
             }
+//                Button(action: {
+//                    EditMode = true
+//                }, label: {
+//                    Text("Edit")
+//                })
         }
+//        if(!EditMode){
+//            VStack{
+//                Text(showToday(today:day) + " Schedule")
+//                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                    .fontWeight(.bold)
+//                    .font(.system(size: 25))
+//                List(times.indices, id: \.self) { idx in
+//                    HStack{
+//                        Text(times[idx])
+//                        Spacer()
+//                        Text(todolist[idx])
+//                        Spacer()
+//                    }
+//                }
+////                Button(action: {
+////                    EditMode = true
+////                }, label: {
+////                    Text("Edit")
+////                })
+//            }
+//            .navigationBarTitleDisplayMode(.inline)
+//            .navigationBarTitle("")
+//            .navigationBarHidden(true)
+//        }
+//        else{
+//            VStack{
+//                List(times.indices, id: \.self) { idx in
+//                    HStack{
+//                        Text(times[idx])
+//                        Spacer()
+//                        Button(action: {
+//                            print(self.dBHP.avaliable)
+//                            if(!self.dBHP.freetime[idx]){
+//                                self.dBHP.freetime[idx] = true
+//                                self.dBHP.avaliable[times[idx]] = true
+//                            }
+//                            else{
+//                                self.dBHP.freetime[idx] = false
+//                                self.dBHP.avaliable[times[idx]] = false
+//                            }
+//                            print(self.dBHP.avaliable)
+//                        }, label: {
+//                            if(!self.dBHP.freetime[idx]){
+//                                Text("Rest")
+//                            }
+//                            else{
+//                                Text("Free")
+//                            }
+//                        })
+//                    }
+//                }
+//
+//                HStack{
+//                    Button(action: {
+//                       EditMode = false
+//                        serialQueue.sync {
+//                            self.dBHP.getAvaliable()
+//                        }
+//
+//                        serialQueue.sync {
+//                            guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+//                            FirebaseManager.shared.firestore.collection("users")
+//                                .document(uid).collection("events").document("avaliable").setData(self.dBHP.avaliable) { [self] err in
+//                                    if let err = err {
+//                                        print(err)
+//                                        return
+//                                    }
+//                                }
+//                        }
+//
+//                    }, label: {
+//                        Text("Done")
+//                    })
+//
+//                    //進行排程
+//                    Button(action: {
+//                        for i in 0..<dBHP.freetime.count{
+//                            if(dBHP.freetime[i]){
+//                                TotalLength+=1
+//                            }
+//                        }
+//                        AvaSection(dbhp: dBHP, section: &emptysection)
+//                        EventSection(dbhp: dBHP, section: &eventsection)
+//                        //schedule(dbhp: dBHP, total: &TotalLength)
+//                        mfc.setData(activityTime: eventsection, availTime: emptysection)
+//                        print("activitytime",eventsection)
+//                        print("availTime",emptysection)
+//                        mfc.maximumFlow()
+//                        if mfc.isVaild() {
+//                            let ret = mfc.getResult()
+//                            for (i, j) in ret {
+//                                print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
+//                            }
+//                        }
+//                        else {
+//                            print("時間給的不夠，重新輸入")
+//                        }
+//
+//                    }, label: {
+//                        Text("Schedule")
+//                    })
+//                }
+//            }
+//            .navigationBarTitleDisplayMode(.inline)
+//            .navigationBarTitle("")
+//            .navigationBarHidden(true)
+//        }
     }
 }
 

@@ -47,27 +47,36 @@ struct SignInView: View {
                 .bold()
                 .padding(.bottom, 30)
                 .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+            Image(systemName: "alarm.fill")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .font(.system(size: 100))
+                .padding(.bottom, 0)
             Text("歡迎使用時間管理大師")
                 .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .padding(.top, 10)
 
             FormFieldView(fieldName: "Email", fieldValue: $email, isSecure: false)
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+                .padding(.top, 50)
 
             
             FormFieldView(fieldName: "Password", fieldValue: $password, isSecure: true)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
+                .padding(.top, 30)
             
             Button {
                 signInHP.LoginAccount(email: email, password: password)
             } label: {
                 Text("Sign In")
-                    .font(.body)
-                    .bold()
-                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .padding(.top, 30)
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
+                    .padding(.top, 70)
             }
             .alert(isPresented: $signInHP.showAlert) { () -> Alert in
                 Alert(title: Text("ERROR"), message: Text(signInHP.errMsg))
@@ -75,7 +84,8 @@ struct SignInView: View {
             
             Spacer()
         }
-        .padding()
+        .padding(.top, 130)
+        .frame(alignment: .center)
     }
 }
 

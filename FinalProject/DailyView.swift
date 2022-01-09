@@ -40,7 +40,7 @@ Restaurant(name: "CASK Pub and Kitchen", image: "caskpubkitchen")
 
 var restaurantNames = ["Cafe Deadend", "Homei", "Teakha",
 "Cafe Loisl", "Petite Oyster", "For Kee Restaurant", "Po'sAtelier", "Bourke Street Bakery", "Haigh's Chocolate",
-"Palomino Espresso", "Upstate", "Traif", "Graham Avenue Meats And Deli", "Waffle & Wolf", "Five Leaves", "Cafe Lore",
+"Palomino Espresso", "Upstate", "Traif", "Graham Avenue Meats And Deli", "Waffle & Wolf", "Five Leaves", "C/Users/isadora/Desktop/1101-HCID-FinalProject/FinalProject/HomeViewModel.swiftafe Lore",
 "Confessional", "Barrafina", "Donostia", "Royal Oak", "CASK Pub and Kitchen"]
 
 var restaurantImages = ["cafedeadend", "homei", "teakha",

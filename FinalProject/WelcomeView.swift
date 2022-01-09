@@ -354,89 +354,109 @@ struct WelcomeView: View {
         let date = formatter.string(from: date)
         return date.components(separatedBy: " ").first!
     }
-
+    
     var body: some View {
         VStack {
+            Spacer()
+            Text("Input Activity")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .bold()
+                .font(.system(size: 30))
+                .padding(.top, 100)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Spacer()
             Form {
-                Section(header: Text("Input Activity")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                            .bold()
-                            .font(.system(size: 30))
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .center)) {
-                    TextField("Activity", text:$val)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
+                TextField("Activity", text:$val)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                     
-                    Picker(selection: $val1) {
-                        ForEach(hours, id: \.self) { hour in
-                            Text(hour)
-                        }
-                    } label: {
-                        Text("Length")
-                            .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
+                
+                Picker(selection: $val1) {
+                    ForEach(hours, id: \.self) { hour in
+                        Text(hour)
                     }
-                    
-                    DatePicker("DeadLine", selection: $dd, displayedComponents: .date)
+                } label: {
+                    Text("Length")
                         .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
                 }
+                
+                DatePicker("DeadLine", selection: $dd, displayedComponents: .date)
+                    .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
             }
-            Button {
-                print(dd)
-                val2 = WelcomeView.DateConvertString(date: dd)
-                print(val2)
-                dBHP.AddData(act: val, len: val1, dd: val2)
-            } label: {
-                Text("Upload")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
+            .background(Color.white)
+            .onAppear { // ADD THESE
+                UITableView.appearance().backgroundColor = .clear
+                //UIScrollView.appearance().isScrollEnabled = false
+            }
+            .frame(maxHeight: .infinity, alignment: .center)
+            .padding(.top, 100)
+            
+            NavigationLink {
+                HomeView()
+            } label : {
+                Button {
+                    print(dd)
+                    val2 = WelcomeView.DateConvertString(date: dd)
+                    print(val2)
+                    dBHP.AddData(act: val, len: val1, dd: val2)
+                } label: {
+                    Text("Upload")
+                        .frame(width: 100, height: 40, alignment: .center)
+                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                        .font(.system(size: 18))
+                        .foregroundColor(.white)
+                        .cornerRadius(10.0)
+                }
+                .frame(maxHeight: .infinity, alignment: .center)
+                .padding(.top, 0)
             }
             
-            Button {
-                dBHP.DeleteData()
-            } label: {
-                Text("Delete")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-            }
             
-            Button {
-                dBHP.GetData()
-            } label: {
-                Text("get")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-            }
-            
-            Button {
-                try! FirebaseManager.shared.auth.signOut()
-                self.isLogin = false
-            } label: {
-                Text("Sign Out")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-            }
+            //                Button {
+            //                    dBHP.DeleteData()
+            //                } label: {
+            //                    Text("Delete")
+            //                        .frame(width: 100, height: 40, alignment: .center)
+            //                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+            //                        .font(.system(size: 18))
+            //                        .foregroundColor(.white)
+            //                        .cornerRadius(10.0)
+            //                        .frame(maxHeight: .infinity, alignment: .center)
+            //                }
+                            
+            //                Button {
+            //                    dBHP.GetData()
+            //                } label: {
+            //                    Text("get")
+            //                        .frame(width: 100, height: 40, alignment: .center)
+            //                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+            //                        .font(.system(size: 18))
+            //                        .foregroundColor(.white)
+            //                        .cornerRadius(10.0)
+            //                        .frame(maxHeight: .infinity, alignment: .center)
+            //                }
+                            
+            //                Button {
+            //                    try! FirebaseManager.shared.auth.signOut()
+            //                    self.isLogin = false
+            //                } label: {
+            //                    Text("Sign Out")
+            //                        .frame(width: 100, height: 40, alignment: .center)
+            //                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+            //                        .font(.system(size: 18))
+            //                        .foregroundColor(.white)
+            //                        .cornerRadius(10.0)
+            //                        .frame(maxHeight: .infinity, alignment: .center)
+            //                }
 //
 //            if let errMsg = dBHP.errMsg {
 //                Text(errMsg)
 //                    .foregroundColor(Color.red)
 //                    .padding(.top, 10)
 //            }
-            List(dBHP.userData.indices, id: \.self) { idx in
-                Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
-            }
+//            List(dBHP.userData.indices, id: \.self) { idx in
+//                Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
+//            }
         }
     }
 }
@@ -444,6 +464,6 @@ struct WelcomeView: View {
 
 //struct WelcomeView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        WelcomeView()
+//        WelcomeView(dBHP: DBHelper())
 //    }
 //}

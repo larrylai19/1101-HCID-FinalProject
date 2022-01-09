@@ -52,20 +52,14 @@ struct HomeView: View {
                     NavigationLink {
                         AddFreeTimeView(dBHP: self.dBHP)
                     } label: {
-                        Text("+")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                        Text("+       ")
+                            .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
                             .fontWeight(.bold)
                             .font(.system(size: 25))
-                            .padding()
-//                        Image(systemName: "plus")
-//                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                            
                     }
-                    
                 }
-                
             }
-            
+            .padding(.top, 0)
             
             if(viewModel.selected)
             {
@@ -79,27 +73,34 @@ struct HomeView: View {
             }
             
             Divider()
-                .background(Color(red: 183/255, green: 101/255, blue: 122/255))
-            Spacer()
+                .background(Color(red: 242/255, green: 242/255, blue: 246/255))
             ZStack {
                 Text("To-do List")
                     .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                     .fontWeight(.bold)
                     .font(.system(size: 20))
-                    .padding(.top, 10)
                 HStack {
+                    Button(action: {
+    //                        dBHP.getCount()
+                        print("homeview: \(dBHP.c)")
+                        viewModel.all = true
+                        dBHP.GetData()
+                    }, label: {
+                        VStack{
+                            Image(systemName: "list.bullet")
+                                .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
+                        }
+                    })
+                    .padding()
+                    
                     Spacer()
                     NavigationLink {
                         WelcomeView(dBHP: self.dBHP)
                     } label: {
-                        Text("+")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                        Text("+       ")
+                            .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
                             .fontWeight(.bold)
                             .font(.system(size: 25))
-                            .padding()
-//                        Image(systemName: "plus")
-//                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                            
                     }
                 }
             }
@@ -107,47 +108,54 @@ struct HomeView: View {
             if(viewModel.all)
             {
                 List(dBHP.userData.indices, id: \.self) { idx in
-                    Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
+                    VStack(alignment: .leading) {
+                        Text("\(dBHP.userData[idx].k)")
+                            .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
+                            .fontWeight(.bold)
+                            .font(.system(size: 20))
+                        Text("\(dBHP.userData[idx].v)  \(dBHP.userData[idx].l)")
+                            .foregroundColor(Color(red: 230/255, green: 108/255, blue: 114/255))
+                    }
+                    
                 }
             }
             else {
                 List(viewModel.selectedEvent.indices, id: \.self) { idx in
                     Text("Activity:\(viewModel.selectedEvent[idx])")
                 }
-                .listRowBackground(Color.green)
             }
-            Spacer()
-            HStack{
-                Button(action: {
-//                        dBHP.getCount()
-                    print("homeview: \(dBHP.c)")
-                    viewModel.all = true
-                    dBHP.GetData()
-                }, label: {
-                    VStack{
-                        Image(systemName: "book")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                        Text("Show All")
-                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                            .fontWeight(.bold)
-                    }
-                })
+            //Spacer()
+//            HStack{
+//                Button(action: {
+////                        dBHP.getCount()
+//                    print("homeview: \(dBHP.c)")
+//                    viewModel.all = true
+//                    dBHP.GetData()
+//                }, label: {
+//                    VStack{
+//                        Image(systemName: "book")
+//                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                        Text("Show All")
+//                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                            .fontWeight(.bold)
+//                    }
+//                })
                 
 //                    Spacer()
                 
-                Button(action: {
-                    //print(dBHP.userData.count)
-                    viewModel.de.removeAll()
-                    viewModel.datesArray.removeAll()
-                    for i in 0..<dBHP.userData.count{
-                        self.viewModel.updateArray(day: dBHP.userData[i].l, activity: dBHP.userData[i].k)
-                    }
-                    viewModel.calendar.reloadData()
-                }, label: {
-                    Text("update")
-                        .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                        .fontWeight(.bold)
-                })
+//                Button(action: {
+//                    //print(dBHP.userData.count)
+//                    viewModel.de.removeAll()
+//                    viewModel.datesArray.removeAll()
+//                    for i in 0..<dBHP.userData.count{
+//                        self.viewModel.updateArray(day: dBHP.userData[i].l, activity: dBHP.userData[i].k)
+//                    }
+//                    viewModel.calendar.reloadData()
+//                }, label: {
+//                    Text("update")
+//                        .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                        .fontWeight(.bold)
+//                })
                 
 //                    Spacer()
                 
@@ -166,8 +174,10 @@ struct HomeView: View {
 //                    } label: {
 //                        Text("Daily")
 //                    }
-            }
+//            }
         }
+        .padding(.top, 0)
+        //.padding(.top, 0)
 //        .toolbar {
 //            ToolbarItem(placement: .navigationBarTrailing) {
 //                Button(action: {
@@ -179,7 +189,10 @@ struct HomeView: View {
 //                })
 //            }
 //        }
-//        .navigationTitle("My Schedule")
+//        .navigationBarTitle(Text("My Calendar")
+//                                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                                .fontWeight(.bold)
+//                                .font(.system(size: 25)), displayMode: .inline)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

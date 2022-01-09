@@ -42,11 +42,13 @@ struct ContentView: View {
         isLogin = FirebaseManager.shared.auth.currentUser != nil
         //UITabBar.appearance().backgroundColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         UITabBar.appearance().unselectedItemTintColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
+        UITabBar.appearance().isTranslucent = false
     }
     
     var body: some View {
         NavigationView {
             if (isLogin) {
+                
                 TabView(selection:$selection){
                     DailyScheduleView(dBHP: self.dBHP)
                         .tabItem {
@@ -75,11 +77,14 @@ struct ContentView: View {
                         .tag(3)
                 }
                 .accentColor(Color.theme)
+            
             }
             else {
                 SignUpView()
             }
+        
         }
+        
     }
 }
 

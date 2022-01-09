@@ -14,20 +14,42 @@ struct PersonView: View {
     
     var body: some View {
         VStack {
-            Text("Hi~")
-                .font(.largeTitle)
-                .bold()
-                .padding(.bottom, 30)
-            Text("\(email)")
-                .bold()
-                .padding(.bottom, 30)
-            Button {
-                try! FirebaseManager.shared.auth.signOut()
-                self.isLogin = false
-            } label: {
-                Text("Sign Out")
-                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+            Image(systemName: "person.circle.fill")
+                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                .font(.system(size: 100))
+                .padding(.bottom, 0)
+            ZStack {
+                Rectangle()
+                    .fill(Color(red: 240/255, green: 240/255, blue: 240/255))
+                    .frame(width: 300, height: 350)
+                    .cornerRadius(15.0)
+                    .padding(.top, 0)
+                VStack {
+                    Text("Hi!")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.bottom, 30)
+                        .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    Text("\(email)")
+                        .bold()
+                        .padding(.bottom, 30)
+                        .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    Button {
+                        try! FirebaseManager.shared.auth.signOut()
+                        self.isLogin = false
+                    } label: {
+                        Text("Sign Out")
+                            .frame(width: 100, height: 40, alignment: .center)
+                            .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .cornerRadius(10.0)
+                    }
+                    
+                }
             }
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
         }
     }
 }

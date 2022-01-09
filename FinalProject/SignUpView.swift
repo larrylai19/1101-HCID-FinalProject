@@ -42,7 +42,7 @@ struct SignUpView: View {
             Text("建立帳號")
                 .font(.largeTitle)
                 .bold()
-                .padding(.bottom, 30)
+                .padding(.top, 50)
                 .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
           
             FormFieldView(fieldName: "Email",
@@ -51,8 +51,10 @@ struct SignUpView: View {
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(false)
                 .autocapitalization(.none)
+                .padding(.top, 40)
         
             FormFieldView(fieldName: "Password", fieldValue: $userRegistrationViewModel.password, isSecure: true)
+                .padding(.top, 20)
             
             VStack {
                 RequirementTextView(
@@ -75,6 +77,7 @@ struct SignUpView: View {
             
             FormFieldView(fieldName: "Confirm Password", fieldValue: $userRegistrationViewModel.passwordConfirm,
                           isSecure: true)
+                .padding(.top, 30)
             
             RequirementTextView(
                 iconName: userRegistrationViewModel.isPasswordConfirmValid ? "lock.open" : "lock",
@@ -99,9 +102,12 @@ struct SignUpView: View {
             }
             else {
                 Text("Sign Up")
-                    .font(.body)
-                    .bold()
-                    .foregroundColor(.gray)
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
+                    .padding(.top, 30)
             }
             
             HStack {
@@ -117,7 +123,7 @@ struct SignUpView: View {
                         .bold()
                         .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                 }
-            }.padding(.top, 50)
+            }.padding(.top, 100)
             Spacer()
         }
         .padding()
