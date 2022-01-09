@@ -27,6 +27,7 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var calendar = FSCalendar()
     @Published var isCalendarExpanded: Bool = true
     @Published var all: Bool = false
+    @Published var selected:Bool = false
     @Published var calendarHeight: CGFloat = 300.0
     @Published var selectedDate: String = ""
     @Published var datesArray = [String]()
@@ -46,12 +47,40 @@ class HomeViewModel: NSObject, ObservableObject {
         calendar.dataSource = self
         calendar.scope = isCalendarExpanded ? .month : .week
         calendar.firstWeekday = 2
+        calendar.scrollDirection = .horizontal
+        
+        //header
         calendar.appearance.headerTitleColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        //calendar.calendarHeaderView.backgroundColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        
+        //week
+        calendar.appearance.weekdayTextColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        //calendar.calendarWeekdayView.backgroundColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        
+        //cell
+        //calendar.collectionView.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
+        
+//        calendar.appearance.titleOffset = CGPoint.init(x: 50, y: 0.0)
+//        calendar.appearance.eventOffset = CGPoint.init(x: 50, y: 0.0)
+        
+        //calendar.appearance.separators = .interRows
+        
+        
         calendar.appearance.todaySelectionColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
-        calendar.appearance.weekdayTextColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.eventDefaultColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.todayColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.selectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        calendar.appearance.eventSelectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        
+        //outside frame
+        //calendar.layer.borderWidth = 3
+        
+        //collection frame
+        //calendar.collectionView.layer.borderWidth = 3
+        
+        //calendar.collectionView.lineWidth = 3
+        //calendar.collectionView.cellForItem(at: IndexPath)
+        
     }
 }
 
@@ -59,7 +88,11 @@ extension HomeViewModel: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar,
                   didSelect date: Date,
                   at monthPosition: FSCalendarMonthPosition) {
+        
+        selected = true
         dateSelected(date)
+        
+        
         //updateEvent()
     }
     
@@ -98,6 +131,8 @@ extension HomeViewModel: FSCalendarDataSource {
         }
         
     }
+    
+    
 
 }
 
@@ -106,6 +141,8 @@ private extension HomeViewModel {
     func dateSelected(_ date: Date) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
+            
             
             let dateFormatter3 = DateFormatter()
             dateFormatter3.dateFormat = "yyyy-MM-dd"

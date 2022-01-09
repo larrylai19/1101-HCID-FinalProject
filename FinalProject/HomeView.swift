@@ -35,9 +35,9 @@ struct HomeView: View {
             self.viewModel.all = true
         }
         self.dBHP.getAvaliable()
-        UITableView.appearance().separatorStyle = .none
-        UITableViewCell.appearance().backgroundColor = .white
-        UITableView.appearance().backgroundColor = .white
+        //UITableView.appearance().separatorStyle = .none
+        //UITableViewCell.appearance().backgroundColor = .white
+        //UITableView.appearance().backgroundColor = .white
     }
     
     var body: some View {
@@ -66,11 +66,20 @@ struct HomeView: View {
                 
             }
             
-            CalendarView(calendar: viewModel.calendar                         )//isCalendarExpanded: $viewModel.isCalendarExpanded
-                .frame(maxWidth: .infinity)
-                .frame(height: viewModel.calendarHeight)
+            
+            if(viewModel.selected)
+            {
+                WelcomeView(dBHP: self.dBHP)
+            }
+            else
+            {
+                CalendarView(calendar: viewModel.calendar                         )//isCalendarExpanded: $viewModel.isCalendarExpanded
+                    .frame(maxWidth: .infinity)
+                    .frame(height: viewModel.calendarHeight)
+            }
             
             Divider()
+                .background(Color(red: 183/255, green: 101/255, blue: 122/255))
             Spacer()
             ZStack {
                 Text("To-do List")

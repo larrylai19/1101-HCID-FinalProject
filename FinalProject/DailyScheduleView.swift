@@ -85,10 +85,14 @@ struct DailyScheduleView: View {
     @State var eventsection = [Int]()
     var mfc = MaximumFlowClass()
     let serialQueue = DispatchQueue(label: "com.waynestalk.serial")
+    
     var body: some View {
-        Text("今天日程"+showToday(today:day))
         if(!EditMode){
             VStack{
+                Text(showToday(today:day) + " Schedule")
+                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .fontWeight(.bold)
+                    .font(.system(size: 25))
                 List(times.indices, id: \.self) { idx in
                     HStack{
                         Text(times[idx])
@@ -97,14 +101,11 @@ struct DailyScheduleView: View {
                         Spacer()
                     }
                 }
-                HStack{
-                    //進入編輯模式
-                    Button(action: {
-                        EditMode = true
-                    }, label: {
-                        Text("Edit")
-                    })
-                }
+                Button(action: {
+                    EditMode = true
+                }, label: {
+                    Text("Edit")
+                })
             }
         }
         else{

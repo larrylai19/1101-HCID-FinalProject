@@ -357,21 +357,28 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack {
-            Text("Login Success \(email)")
             Form {
-                Section(header: Text("請輸入事件")) {
+                Section(header: Text("Input Activity")
+                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                            .bold()
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .center)) {
                     TextField("Activity", text:$val)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
+                    
                     Picker(selection: $val1) {
                         ForEach(hours, id: \.self) { hour in
                             Text(hour)
                         }
                     } label: {
-                        Text("選擇時間（小時）")
+                        Text("Length")
+                            .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
                     }
                     
                     DatePicker("DeadLine", selection: $dd, displayedComponents: .date)
+                        .foregroundColor(Color(red: 192/255, green: 192/255, blue: 192/255))
                 }
             }
             Button {
@@ -381,18 +388,33 @@ struct WelcomeView: View {
                 dBHP.AddData(act: val, len: val1, dd: val2)
             } label: {
                 Text("Upload")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
             }
             
             Button {
                 dBHP.DeleteData()
             } label: {
                 Text("Delete")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
             }
             
             Button {
                 dBHP.GetData()
             } label: {
                 Text("get")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
             }
             
             Button {
@@ -400,6 +422,11 @@ struct WelcomeView: View {
                 self.isLogin = false
             } label: {
                 Text("Sign Out")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
             }
 //
 //            if let errMsg = dBHP.errMsg {
