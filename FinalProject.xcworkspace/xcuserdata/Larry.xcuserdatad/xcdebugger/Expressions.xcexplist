@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "schedule(dbhp:result:section:):DailyScheduleView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "todolist">
+            </PersistentString>
+            <PersistentString
+               value = "dbhp.userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

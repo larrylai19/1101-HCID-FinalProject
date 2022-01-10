@@ -4,12 +4,14 @@
 //
 //  Created by Larry - 1024 on 2022/1/6.
 import SwiftUI
+import UserNotifications
 var times = ["00:00~01:00","01:00~02:00","02:00~03:00","03:00~04:00","04:00~05:00","05:00~06:00","06:00~07:00","07:00~08:00","08:00~09:00","09:00~10:00","10:00~11:00","11:00~12:00","12:00~13:00","13:00~14:00","14:00~15:00","15:00~16:00","16:00~17:00","17:00~18:00" ,"18:00~19:00","19:00~20:00","20:00~21:00","21:00~22:00","22:00~23:00","23:00~00:00"
 ]
 
-var todolist = [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
-//var avaliable = [true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true]
-
+var todolist =  [String]()
+var todotime =  [String]()
+var timeindex =  [Int]()
+var tt = [String]()
 func showToday(today:Date) -> String{
     let dateFormatter3 = DateFormatter()
     dateFormatter3.dateFormat = "yyyy-MM-dd"
@@ -17,16 +19,18 @@ func showToday(today:Date) -> String{
     return dateString
 }
 
-func schedule(dbhp:DBHelper,total:inout Int){
-    for j in 0..<todolist.count{
-        for i in 0..<dbhp.userData.count{
-            if(dbhp.freetime[j] && total > 0){
-               //print(dbhp.userData[i].k)
-                todolist[j] = dbhp.userData[i].k
-                total-=1
-                break
-            }else{
-                todolist[j] = " "
+func schedule(dbhp:DBHelper,result:Array<(key: Int, value: Int)>,section:inout [Int] ){
+    print("result: ",result)
+    print("timeindex: ",timeindex)
+    for (m , n) in result{
+        for i in timeindex[n]..<timeindex[n]+section[n]{
+            for j in 0..<todolist.count{
+                print("todolist[j]",todolist[j])
+                print("String",i)
+                if(todotime[j].contains(String(i))){
+                    todolist[j] = dbhp.userData[m].k
+                    break
+                }
             }
         }
     }
@@ -36,6 +40,9 @@ func AvaSection(dbhp:DBHelper,section:inout [Int]){
     section.removeAll()
     print(dbhp.freetime)
     var i = 0
+    timeindex.removeAll()
+    todotime.removeAll()
+    todolist.removeAll()
     while i < 24{
         if(dbhp.freetime[i]){
             var tmp = 0
@@ -44,8 +51,11 @@ func AvaSection(dbhp:DBHelper,section:inout [Int]){
                 if(dbhp.freetime[i+j])
                 {
                     tmp+=1
+                    todotime.append(times[i+j])
+                    todolist.append(" ")
                     if(i+j == 23 && tmp != 0)
                     {
+                        timeindex.append(i)
                         section.append(tmp)
                         i = 24
                         break
@@ -54,6 +64,7 @@ func AvaSection(dbhp:DBHelper,section:inout [Int]){
                 else
                 {
                     section.append(tmp)
+                    timeindex.append(i)
                     i = j + i
                     break
                 }
@@ -85,139 +96,217 @@ struct DailyScheduleView: View {
     @State var eventsection = [Int]()
     var mfc = MaximumFlowClass()
     let serialQueue = DispatchQueue(label: "com.waynestalk.serial")
-    
+
     var body: some View {
-        VStack{
-            Text(showToday(today:day) + " Schedule")
-                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-                .fontWeight(.bold)
-                .font(.system(size: 25))
-            List(times.indices, id: \.self) { idx in
-                HStack{
-                    Text(times[idx])
-                    Spacer()
-                    Text(todolist[idx])
-                    Spacer()
-                }
-            }
-//                Button(action: {
-//                    EditMode = true
-//                }, label: {
-//                    Text("Edit")
-//                })
-        }
-//        if(!EditMode){
-//            VStack{
-//                Text(showToday(today:day) + " Schedule")
-//                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
-//                    .fontWeight(.bold)
-//                    .font(.system(size: 25))
-//                List(times.indices, id: \.self) { idx in
-//                    HStack{
-//                        Text(times[idx])
-//                        Spacer()
-//                        Text(todolist[idx])
-//                        Spacer()
-//                    }
+//        VStack{
+//            Text(showToday(today:day) + " Schedule")
+//                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+//                .fontWeight(.bold)
+//                .font(.system(size: 25))
+//            List(times.indices, id: \.self) { idx in
+//                HStack{
+//                    Text(times[idx])
+//                    Spacer()
+//                    Text(todolist[idx])
+//                    Spacer()
 //                }
+//            }
 ////                Button(action: {
 ////                    EditMode = true
 ////                }, label: {
 ////                    Text("Edit")
 ////                })
-//            }
-//            .navigationBarTitleDisplayMode(.inline)
-//            .navigationBarTitle("")
-//            .navigationBarHidden(true)
 //        }
-//        else{
-//            VStack{
-//                List(times.indices, id: \.self) { idx in
+        if(!EditMode){
+            VStack{
+                Text(showToday(today:day) + " Schedule")
+                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .fontWeight(.bold)
+                    .font(.system(size: 25))
+//                List(dBHP.userData.indices, id: \.self) { idx in
 //                    HStack{
-//                        Text(times[idx])
+//                        Text(todolist[idx])
 //                        Spacer()
-//                        Button(action: {
-//                            print(self.dBHP.avaliable)
-//                            if(!self.dBHP.freetime[idx]){
-//                                self.dBHP.freetime[idx] = true
-//                                self.dBHP.avaliable[times[idx]] = true
-//                            }
-//                            else{
-//                                self.dBHP.freetime[idx] = false
-//                                self.dBHP.avaliable[times[idx]] = false
-//                            }
-//                            print(self.dBHP.avaliable)
-//                        }, label: {
-//                            if(!self.dBHP.freetime[idx]){
-//                                Text("Rest")
-//                            }
-//                            else{
-//                                Text("Free")
-//                            }
-//                        })
+//
+//                        Spacer()
 //                    }
 //                }
-//
-//                HStack{
-//                    Button(action: {
-//                       EditMode = false
-//                        serialQueue.sync {
-//                            self.dBHP.getAvaliable()
-//                        }
-//
-//                        serialQueue.sync {
-//                            guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-//                            FirebaseManager.shared.firestore.collection("users")
-//                                .document(uid).collection("events").document("avaliable").setData(self.dBHP.avaliable) { [self] err in
-//                                    if let err = err {
-//                                        print(err)
-//                                        return
-//                                    }
-//                                }
-//                        }
-//
-//                    }, label: {
-//                        Text("Done")
-//                    })
-//
-//                    //進行排程
-//                    Button(action: {
-//                        for i in 0..<dBHP.freetime.count{
-//                            if(dBHP.freetime[i]){
-//                                TotalLength+=1
-//                            }
-//                        }
-//                        AvaSection(dbhp: dBHP, section: &emptysection)
-//                        EventSection(dbhp: dBHP, section: &eventsection)
-//                        //schedule(dbhp: dBHP, total: &TotalLength)
-//                        mfc.setData(activityTime: eventsection, availTime: emptysection)
-//                        print("activitytime",eventsection)
-//                        print("availTime",emptysection)
-//                        mfc.maximumFlow()
-//                        if mfc.isVaild() {
-//                            let ret = mfc.getResult()
-//                            for (i, j) in ret {
-//                                print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
-//                            }
-//                        }
-//                        else {
-//                            print("時間給的不夠，重新輸入")
-//                        }
-//
-//                    }, label: {
-//                        Text("Schedule")
-//                    })
-//                }
-//            }
-//            .navigationBarTitleDisplayMode(.inline)
-//            .navigationBarTitle("")
-//            .navigationBarHidden(true)
-//        }
+                if(todolist.count != 0){
+                    List(todolist.indices, id: \.self) { idx in
+                        HStack{
+                            Text(todotime[idx])
+                            Spacer()
+                            Text(todolist[idx])
+                            Spacer()
+                        }
+                    }
+                }else{
+                    List(times.indices, id: \.self) { idx in
+                        HStack{
+                            Text(times[idx])
+                            Spacer()
+
+                        }
+                    }
+                }
+                Button(action: {
+                    EditMode = true
+                    dBHP.getAllData()
+                }, label: {
+                    Text("Edit")
+                })
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }
+        else{
+            VStack{
+                List(times.indices, id: \.self) { idx in
+                    HStack{
+                        Text(times[idx])
+                        Spacer()
+                        Button(action: {
+                            print(self.dBHP.avaliable)
+                            if(!self.dBHP.freetime[idx]){
+                                self.dBHP.freetime[idx] = true
+                                self.dBHP.avaliable[times[idx]] = true
+                            }
+                            else{
+                                self.dBHP.freetime[idx] = false
+                                self.dBHP.avaliable[times[idx]] = false
+                            }
+                            print(self.dBHP.avaliable)
+                        }, label: {
+                            if(!self.dBHP.freetime[idx]){
+                                Text("Rest")
+                            }
+                            else{
+                                Text("Free")
+                            }
+                        })
+                    }
+                }
+
+                HStack{
+                    Button(action: {
+                       EditMode = false
+                        serialQueue.sync {
+                            self.dBHP.getAvaliable()
+                        }
+
+                        serialQueue.sync {
+                            guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+                            FirebaseManager.shared.firestore.collection("users")
+                                .document(uid).collection("events").document("avaliable").setData(self.dBHP.avaliable) { [self] err in
+                                    if let err = err {
+                                        print(err)
+                                        return
+                                    }
+                                }
+                        }
+
+                    }, label: {
+                        Text("Done")
+                    })
+
+                    //進行排程
+                    Button(action: {
+                        AvaSection(dbhp: dBHP, section: &emptysection)
+                        EventSection(dbhp: dBHP, section: &eventsection)
+                        //schedule(dbhp: dBHP, total: &TotalLength)
+                        var temp = [Int]()
+                        var tp = [Int]()
+                        if emptysection.count < eventsection.count{
+                            var mx = eventsection.max()!
+                            for i in 0..<emptysection.count{
+                                var e = emptysection[i]
+                                var indextmp = timeindex[i]
+                                if(e > mx){
+                                    var tmp = e
+                                    while tmp > mx{
+                                        temp.append(mx)
+                                        tp.append(indextmp)
+                                        indextmp += mx
+                                        tmp -= mx
+                                    }
+                                    temp.append(tmp)
+                                    tp.append(indextmp)
+                                }
+                                else{
+                                    temp.append(e)
+                                    tp.append(timeindex[i])
+                                }
+                            }
+                            emptysection = temp
+                            timeindex = tp
+                        }
+                        
+                        mfc.setData(activityTime: eventsection, availTime: emptysection)
+                        print("activitytime",eventsection)
+                        print("availTime",emptysection)
+                        mfc.maximumFlow()
+                        if mfc.isVaild() {
+                            let ret = mfc.getResult()
+                            for (i, j) in ret {
+                                print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
+                            }
+                            schedule(dbhp: dBHP, result: ret,section: &emptysection)
+                        }
+                        else {
+                            print("時間給的不夠，重新輸入")
+                        }
+                        
+                        
+                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]){ success, error in
+                            if success {
+                                print("all set")
+                            } else if let error = error {
+                                print(error.localizedDescription)
+                            }
+                        }
+                        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                        let ret = mfc.getResult()
+                        for (m,n) in ret {
+                            let content = UNMutableNotificationContent()
+                            content.title = "Time to Working !"
+                            content.subtitle = "\(dBHP.userData[m].k) needs to be done."
+                            content.sound = UNNotificationSound.default
+                            var Today = showToday(today: day)
+                            let calendar = Calendar.current
+    //                        let components = DateComponents(year: 2022, month: 01, day: 11, hour: 2, minute: 00) // Set the date here when you want Notification
+                            var components = DateComponents()
+                            let b = Today.split(separator: "-")
+                            components.year = Int(b[0])
+                            components.month = Int(b[1])
+                            components.day = Int(b[2])
+                            components.hour = timeindex[n]
+                            components.minute = 0
+                            let date = calendar.date(from: components)
+                            let comp2 = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: date!)
+                            let trigger = UNCalendarNotificationTrigger(dateMatching: comp2, repeats: false)
+                            let request = UNNotificationRequest(
+                                identifier: UUID().uuidString,
+                                content: content,
+                                trigger: trigger
+                            )
+                            
+                            UNUserNotificationCenter.current().add(request)
+                        }
+                    }, label: {
+                        Text("Schedule")
+                    })
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }
     }
 }
 
-struct DailyScheduleView_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyScheduleView(dBHP: DBHelper())
-    }
-}
+//struct DailyScheduleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyScheduleView(dBHP: DBHelper())
+//    }
+//}

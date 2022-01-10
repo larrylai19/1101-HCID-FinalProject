@@ -35,10 +35,11 @@ class MaximumFlowClass {
         self.totNode = self.activityTime.count + self.availTime.count + 1
         
         self.sink = totNode
-        
+        self.mf = 0
         self.p.removeAll()
         self.vis.removeAll()
         self.ret.removeAll()
+        self.rn.removeAll()
         createNodes()
     }
     
@@ -159,6 +160,8 @@ class MaximumFlowClass {
     }
     
     func isVaild() -> Bool {
+        print(mf)
+        print(totFlow)
         return self.mf == self.totFlow
     }
     
