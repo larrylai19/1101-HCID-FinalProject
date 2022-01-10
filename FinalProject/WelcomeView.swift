@@ -226,8 +226,8 @@ class DBHelper: ObservableObject {
                         for _ in 0...4 {
                             dID.remove(at: dID.startIndex)
                         }
-                        print(dID)
-                        print(data)
+//                        print(dID)
+//                        print(data)
                         self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String, l: data["DeadLine"] as! String, eventCnt: Int(dID)!))
                     }
                 })
@@ -389,10 +389,10 @@ struct WelcomeView: View {
     ]
     
     static func DateConvertString(date:Date,dateFormat:String="yyyy-MM-dd") ->String{
-        let timeZone = TimeZone.init(identifier: "UTC")
+        let timeZone = TimeZone.init(identifier: "Asia/Taipei")
         let formatter = DateFormatter()
         formatter.timeZone = timeZone
-        formatter.locale = Locale.init(identifier: "Zh_CN")
+        formatter.locale = Locale.init(identifier: "zh_Hant_TW")
         formatter.dateFormat = dateFormat
         let date = formatter.string(from: date)
         return date.components(separatedBy: " ").first!
@@ -435,7 +435,7 @@ struct WelcomeView: View {
             .padding(.top, 100)
             
             Button {
-                //print(dd)
+                print(dd)
                 val2 = WelcomeView.DateConvertString(date: dd)
                 //print(val2)
                 dBHP.AddData(act: val, len: val1, dd: val2)

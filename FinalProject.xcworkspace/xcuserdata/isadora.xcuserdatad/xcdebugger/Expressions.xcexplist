@@ -3,10 +3,16 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "DBHelper.getCount():WelcomeView.swift">
+         contextName = "schedule(dbhp:result:section:):DailyScheduleView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "userData">
+               value = "timeindex">
+            </PersistentString>
+            <PersistentString
+               value = "section">
+            </PersistentString>
+            <PersistentString
+               value = "todotime">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,6 +21,25 @@
          <PersistentStrings>
             <PersistentString
                value = "userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DBHelper.getCount():WelcomeView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "schedule(dbhp:result:eventsection:):DailyScheduleView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "eventsection">
+            </PersistentString>
+            <PersistentString
+               value = "timeindex">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

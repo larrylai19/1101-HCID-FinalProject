@@ -19,15 +19,18 @@ func showToday(today:Date) -> String{
     return dateString
 }
 
-func schedule(dbhp:DBHelper,result:Array<(key: Int, value: Int)>,section:inout [Int] ){
+func schedule(dbhp:DBHelper,result:Array<(key: Int, value: Int)>,eventsection:inout [Int] ){
     print("result: ",result)
     print("timeindex: ",timeindex)
     for (m , n) in result{
-        for i in timeindex[n]..<timeindex[n]+section[n]{
+        if m == 2 {
+            print("happy")
+        }
+        for i in timeindex[n]..<timeindex[n]+eventsection[m]{
             for j in 0..<todolist.count{
-                print("todolist[j]",todolist[j])
-                print("String",i)
-                if(todotime[j].contains(String(i))){
+//                print("todotime[j]",todotime[j].prefix(2))
+//                print("String",i)
+                if(Int(todotime[j].prefix(2)) == i){
                     todolist[j] = dbhp.userData[m].k
                     break
                 }
@@ -94,6 +97,8 @@ struct DailyScheduleView: View {
     @State var TotalLength = 0
     @State var emptysection = [Int]()
     @State var eventsection = [Int]()
+    @State private var showAlert = false
+    @State private var alertTitle = "請加入更多空閒時間！"
     var mfc = MaximumFlowClass()
     let serialQueue = DispatchQueue(label: "com.waynestalk.serial")
 
@@ -180,9 +185,11 @@ struct DailyScheduleView: View {
                         }, label: {
                             if(!self.dBHP.freetime[idx]){
                                 Text("Rest")
+                                    .foregroundColor(Color(red: 225/255, green: 225/255, blue: 225/255))
                             }
                             else{
                                 Text("Free")
+                                    .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                             }
                         })
                     }
@@ -251,9 +258,10 @@ struct DailyScheduleView: View {
                             for (i, j) in ret {
                                 print("活動 \(i) (\(eventsection[i]) 小時) 對應到空閑時間 \(j) (\(emptysection[j]) 小時)")
                             }
-                            schedule(dbhp: dBHP, result: ret,section: &emptysection)
+                            schedule(dbhp: dBHP, result: ret, eventsection: &eventsection)
                         }
                         else {
+                            showAlert = true
                             print("時間給的不夠，重新輸入")
                         }
                         
@@ -295,6 +303,8 @@ struct DailyScheduleView: View {
                         }
                     }, label: {
                         Text("Schedule")
+                    }).alert(alertTitle, isPresented: $showAlert, actions: {
+                        Button("OK") { }
                     })
                 }
             }
