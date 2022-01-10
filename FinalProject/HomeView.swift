@@ -36,7 +36,7 @@ struct BasicImageRow: View {
                     .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                     .fontWeight(.bold)
                     .font(.system(size: 20))
-                Text("\(thisActivity.l) \(thisActivity.l)")
+                Text(thisActivity.l)
                     .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
             }
         }
