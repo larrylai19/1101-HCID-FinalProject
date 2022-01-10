@@ -216,6 +216,7 @@ class DBHelper: ObservableObject {
                     print("\(err)")
                     return
                 }
+                self.userData.removeAll()
                 
                 querySnapshot?.documents.forEach({ queryDocumentSnapshot in
                     let data = queryDocumentSnapshot.data()
@@ -225,12 +226,13 @@ class DBHelper: ObservableObject {
                         for _ in 0...4 {
                             dID.remove(at: dID.startIndex)
                         }
-                        //print(dID)
-                        //print(data)
+                        print(dID)
+                        print(data)
                         self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String, l: data["DeadLine"] as! String, eventCnt: Int(dID)!))
                     }
                 })
             }
+        self.firstGetData = true
     }
     
     public func AddData(act: String, len: String, dd:String ) {
@@ -250,9 +252,9 @@ class DBHelper: ObservableObject {
 
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
-        if self.uploadData["event"+String(self.c)] == nil {
-            self.userData.append(DataDetail(k: act, v: len , l:dd))
-        }
+//        if self.uploadData["event"+String(self.c)] == nil {
+//            self.userData.append(DataDetail(k: act, v: len , l:dd))
+//        }
 
         self.uploadData["Activity"] = act
         self.uploadData["Lengh"] = len
@@ -433,10 +435,11 @@ struct WelcomeView: View {
             .padding(.top, 100)
             
             Button {
-                print(dd)
+                //print(dd)
                 val2 = WelcomeView.DateConvertString(date: dd)
-                print(val2)
+                //print(val2)
                 dBHP.AddData(act: val, len: val1, dd: val2)
+                print("Add after", self.dBHP.userData)
                 self.presentationMode.wrappedValue.dismiss()
             } label: {
                 Text("Upload")

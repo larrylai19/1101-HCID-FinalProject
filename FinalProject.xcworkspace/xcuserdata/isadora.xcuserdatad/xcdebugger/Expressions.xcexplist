@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "DBHelper.getCount():WelcomeView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DBHelper.AddData(act:len:dd:):WelcomeView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
