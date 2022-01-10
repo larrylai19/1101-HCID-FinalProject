@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09185A74278C29AA006A7B17 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09185A73278C29AA006A7B17 /* ImagePicker.swift */; };
 		092FA47D278A058500383FFA /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA47C278A058500383FFA /* PersonView.swift */; };
 		092FA47F278A12A800383FFA /* AddFreeTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA47E278A12A800383FFA /* AddFreeTimeView.swift */; };
 		092FA481278AC31900383FFA /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA480278AC31900383FFA /* DIYCalendarCell.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09185A73278C29AA006A7B17 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		092FA47C278A058500383FFA /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		092FA47E278A12A800383FFA /* AddFreeTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFreeTimeView.swift; sourceTree = "<group>"; };
 		092FA480278AC31900383FFA /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				4658C26D2787324500F52040 /* DailyScheduleView.swift */,
 				460A0497278313AA006F3BED /* HomeViewModel.swift */,
 				462D424D275C8E5300FC113C /* CalendarView.swift */,
+				09185A73278C29AA006A7B17 /* ImagePicker.swift */,
 				460A0499278313E9006F3BED /* HomeView.swift */,
 				46B93F582789B44E008B69CD /* DailyView.swift */,
 				46509BDB27652B240079B27B /* WelcomeView.swift */,
@@ -276,6 +279,7 @@
 				462D424C275B680000FC113C /* UserRegistrationModel.swift in Sources */,
 				46B93F592789B44E008B69CD /* DailyView.swift in Sources */,
 				46509BDE2765F7190079B27B /* FirebaseManager.swift in Sources */,
+				09185A74278C29AA006A7B17 /* ImagePicker.swift in Sources */,
 				46509BDC27652B240079B27B /* WelcomeView.swift in Sources */,
 				092FA47F278A12A800383FFA /* AddFreeTimeView.swift in Sources */,
 				462D4248275B652200FC113C /* FormFieldView.swift in Sources */,
