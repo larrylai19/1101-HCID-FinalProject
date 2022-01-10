@@ -108,15 +108,21 @@ struct HomeView: View {
             if(viewModel.all)
             {
                 List(dBHP.userData.indices, id: \.self) { idx in
-                    VStack(alignment: .leading) {
-                        Text("\(dBHP.userData[idx].k)")
-                            .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("\(dBHP.userData[idx].k)")
+                                .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
+                                .fontWeight(.bold)
+                                .font(.system(size: 20))
+                            Text("\(dBHP.userData[idx].v)  \(dBHP.userData[idx].l)")
+                                .foregroundColor(Color(red: 183/255, green: 101/255, blue: 122/255))
+                        }
+                        Spacer()
+                        Text("-")
+                            .foregroundColor(Color(red: 82/255, green: 85/255, blue: 123/255))
                             .fontWeight(.bold)
-                            .font(.system(size: 20))
-                        Text("\(dBHP.userData[idx].v)  \(dBHP.userData[idx].l)")
-                            .foregroundColor(Color(red: 230/255, green: 108/255, blue: 114/255))
-                    }
-                    
+                            .font(.system(size: 25))
+                    }     
                 }
             }
             else {

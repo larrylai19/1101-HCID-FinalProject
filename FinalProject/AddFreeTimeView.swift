@@ -64,23 +64,25 @@ struct AddFreeTimeView: View {
             .frame(maxHeight: .infinity, alignment: .center)
             .padding(.top, 100)
             
-            NavigationLink {
-                HomeView()
-            } label: {
-                Button(action: {
-                    val = WelcomeView.DateConvertString(date: dd)
-                    dBHP.AddFreeData(act: val, len: val1, dd: val2)
-                }, label: {
-                    Text("Upload")
-                        .frame(width: 100, height: 40, alignment: .center)
-                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                        .font(.system(size: 18))
-                        .foregroundColor(.white)
-                        .cornerRadius(10.0)
-                })
-                .frame(maxHeight: .infinity, alignment: .center)
-                .padding(.top, 0)
-            }
+            Button(action: {
+                val = WelcomeView.DateConvertString(date: dd)
+                dBHP.AddFreeData(act: val, len: val1, dd: val2)
+            }, label: {
+                Text("Upload")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
+            })
+            .frame(maxHeight: .infinity, alignment: .center)
+            .padding(.top, 0)
+            
+//            NavigationLink {
+//                ContentView()
+//            } label: {
+//
+//            }
             
 //            Button(action: {
 //                dBHP.GetFreeTimeData()
