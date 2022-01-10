@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddFreeTimeView: View {
+    @Environment(\.presentationMode) var presentationMode
     var dBHP:DBHelper
     @State var key = "Activity"
     @State var val = ""
@@ -67,6 +68,7 @@ struct AddFreeTimeView: View {
             Button(action: {
                 val = WelcomeView.DateConvertString(date: dd)
                 dBHP.AddFreeData(act: val, len: val1, dd: val2)
+                self.presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("Upload")
                     .frame(width: 100, height: 40, alignment: .center)

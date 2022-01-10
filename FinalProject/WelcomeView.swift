@@ -1,8 +1,10 @@
 import SwiftUI
-struct DataDetail{
+struct DataDetail : Identifiable {
+    var id = UUID()
     var k = ""
     var v = ""
     var l = ""
+    var eventCnt = 0
 }
 
 
@@ -196,7 +198,7 @@ class DBHelper: ObservableObject {
 //                        self.userData.append(DataDetail(k: e.key, v: "\(e.value)"))
 //                        self.uploadData[e.key] = e.value as! String
 //                    }
-                    self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String , l:data["DeadLine"] as! String))
+                    self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String , l:data["DeadLine"] as! String, eventCnt: index))
 //                    print(self.userData)
                     self.priority()
                     print(self.userData)
@@ -204,6 +206,31 @@ class DBHelper: ObservableObject {
                 }
         }
         self.firstGetData = true
+    }
+    
+    public func getAllData() {
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        FirebaseManager.shared.firestore.collection("users").document(uid).collection("events")
+            .addSnapshotListener { querySnapshot, error in
+                if let err = error {
+                    print("\(err)")
+                    return
+                }
+                
+                querySnapshot?.documents.forEach({ queryDocumentSnapshot in
+                    let data = queryDocumentSnapshot.data()
+                    
+                    if data.keys.contains("Activity") {
+                        var dID = queryDocumentSnapshot.documentID
+                        for _ in 0...4 {
+                            dID.remove(at: dID.startIndex)
+                        }
+                        //print(dID)
+                        //print(data)
+                        self.userData.append(DataDetail(k: data["Activity"] as! String, v: data["Lengh"] as! String, l: data["DeadLine"] as! String, eventCnt: Int(dID)!))
+                    }
+                })
+            }
     }
     
     public func AddData(act: String, len: String, dd:String ) {
@@ -305,6 +332,19 @@ class DBHelper: ObservableObject {
             }
     }
     
+    public func deleteSingle(pos: Int) {
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        FirebaseManager.shared.firestore.collection("users")
+                .document(uid).collection("events").document("event"+String(pos)).delete()
+        for idx in self.userData.indices {
+            if self.userData[idx].eventCnt == pos {
+                self.userData.remove(at: idx)
+                print("Delete event\(pos) complete")
+                return
+            }
+        }
+    }
+    
     public func DeleteData() {
         let cl = ["count": "0"]
         getCount()
@@ -330,6 +370,7 @@ class DBHelper: ObservableObject {
 
 struct WelcomeView: View {
     @AppStorage("isLogin") var isLogin = false
+    @Environment(\.presentationMode) var presentationMode
     var uid = FirebaseManager.shared.auth.currentUser != nil ? FirebaseManager.shared.auth.currentUser?.uid as! String : ""
     var email = FirebaseManager.shared.auth.currentUser?.email as! String
 
@@ -391,25 +432,22 @@ struct WelcomeView: View {
             .frame(maxHeight: .infinity, alignment: .center)
             .padding(.top, 100)
             
-            NavigationLink {
-                HomeView()
-            } label : {
-                Button {
-                    print(dd)
-                    val2 = WelcomeView.DateConvertString(date: dd)
-                    print(val2)
-                    dBHP.AddData(act: val, len: val1, dd: val2)
-                } label: {
-                    Text("Upload")
-                        .frame(width: 100, height: 40, alignment: .center)
-                        .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                        .font(.system(size: 18))
-                        .foregroundColor(.white)
-                        .cornerRadius(10.0)
-                }
-                .frame(maxHeight: .infinity, alignment: .center)
-                .padding(.top, 0)
+            Button {
+                print(dd)
+                val2 = WelcomeView.DateConvertString(date: dd)
+                print(val2)
+                dBHP.AddData(act: val, len: val1, dd: val2)
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                Text("Upload")
+                    .frame(width: 100, height: 40, alignment: .center)
+                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .cornerRadius(10.0)
             }
+            .frame(maxHeight: .infinity, alignment: .center)
+            .padding(.top, 0)
             
             
             //                Button {
