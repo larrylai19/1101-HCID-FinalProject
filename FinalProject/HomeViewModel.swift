@@ -33,7 +33,6 @@ class HomeViewModel: NSObject, ObservableObject {
     @Published var datesArray = [String]()
     @Published var de = [dayEvent]()
     @Published var selectedEvent = [String]()
-    
     func updateArray(day:String,activity:String) {
         datesArray.append(day)
         self.de.append(dayEvent(day: day, act: activity))
@@ -47,18 +46,22 @@ class HomeViewModel: NSObject, ObservableObject {
         calendar.dataSource = self
         calendar.scope = isCalendarExpanded ? .month : .week
         calendar.firstWeekday = 2
-        calendar.scrollDirection = .horizontal
-        
+        //calendar.scrollDirection = .horizontal
+//        de.removeAll()
+//        datesArray.removeAll()
+//        for i in 0..<self.dBHP.userData.count{
+//            self.viewModel.updateArray(day: dBHP.userData[i].l, activity: dBHP.userData[i].k)
+//        }
         //header
         calendar.appearance.headerTitleColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
-        //calendar.calendarHeaderView.backgroundColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        calendar.calendarHeaderView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         
         //week
         calendar.appearance.weekdayTextColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
-        //calendar.calendarWeekdayView.backgroundColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        calendar.calendarWeekdayView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         
         //cell
-        //calendar.collectionView.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1)
+        calendar.collectionView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         
 //        calendar.appearance.titleOffset = CGPoint.init(x: 50, y: 0.0)
 //        calendar.appearance.eventOffset = CGPoint.init(x: 50, y: 0.0)
@@ -67,10 +70,10 @@ class HomeViewModel: NSObject, ObservableObject {
         
         
         calendar.appearance.todaySelectionColor = UIColor(red: 230/255, green: 108/255, blue: 114/255, alpha: 1)
-        calendar.appearance.eventDefaultColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
+        //calendar.appearance.eventDefaultColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.todayColor = UIColor(red: 82/255, green: 85/255, blue: 123/255, alpha: 1)
         calendar.appearance.selectionColor = UIColor(red: 230/255, green: 108/255, blue: 114/255, alpha: 1)
-        calendar.appearance.eventSelectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
+        //calendar.appearance.eventSelectionColor = UIColor(red: 183/255, green: 101/255, blue: 122/255, alpha: 1)
         
         //outside frame
         //calendar.layer.borderWidth = 3
@@ -103,6 +106,7 @@ extension HomeViewModel: FSCalendarDelegate {
     }
     
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
+        //print("action")
         let dateFormatter3 = DateFormatter()
         dateFormatter3.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter3.string(from: date)
@@ -110,7 +114,8 @@ extension HomeViewModel: FSCalendarDelegate {
         //display events as dots
         cell.eventIndicator.isHidden = false
         cell.eventIndicator.color = generateRandomColor()
-        
+        print("datesArray",datesArray)
+        print("dateString",dateString)
         if self.datesArray.contains(dateString){
             cell.eventIndicator.numberOfEvents = 1
         }

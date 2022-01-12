@@ -74,5 +74,6 @@ struct PersonView: View {
             }
             .padding(.top, 130)
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -29,7 +29,7 @@ struct ContentView: View {
             self.dBHP.getCount()
             print("Count",dBHP.c)
         }
-        
+        self.dBHP.getAllData()
         serialQueue1.sync {
             self.dBHP.GetData()
             print("Count",dBHP.c)

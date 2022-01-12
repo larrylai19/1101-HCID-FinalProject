@@ -99,6 +99,7 @@ struct AddFreeTimeView: View {
 //            .frame(maxHeight: .infinity, alignment: .center)
 //            .padding(.top, 0)
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

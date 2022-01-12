@@ -11,8 +11,8 @@
 		092FA47D278A058500383FFA /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA47C278A058500383FFA /* PersonView.swift */; };
 		092FA47F278A12A800383FFA /* AddFreeTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA47E278A12A800383FFA /* AddFreeTimeView.swift */; };
 		092FA481278AC31900383FFA /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092FA480278AC31900383FFA /* DIYCalendarCell.swift */; };
+		09A5F85E278F182E00E8F21F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09A5F85D278F182E00E8F21F /* GoogleService-Info.plist */; };
 		412899F8AAFAC92A875EF4D2 /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B9191BD85F0F192D7C6559 /* Pods_FinalProject.framework */; };
-		460697EA27719BFC0009CC30 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 460697E927719BFC0009CC30 /* GoogleService-Info.plist */; };
 		460A0498278313AA006F3BED /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A0497278313AA006F3BED /* HomeViewModel.swift */; };
 		460A049A278313E9006F3BED /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A0499278313E9006F3BED /* HomeView.swift */; };
 		462D4235275B53B000FC113C /* FinalProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D4234275B53B000FC113C /* FinalProjectApp.swift */; };
@@ -39,8 +39,8 @@
 		092FA47C278A058500383FFA /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		092FA47E278A12A800383FFA /* AddFreeTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFreeTimeView.swift; sourceTree = "<group>"; };
 		092FA480278AC31900383FFA /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
+		09A5F85D278F182E00E8F21F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0AE6321534625F066C7E3449 /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
-		460697E927719BFC0009CC30 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		460A0497278313AA006F3BED /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		460A0499278313E9006F3BED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		462D4231275B53B000FC113C /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,13 +120,13 @@
 				460A0499278313E9006F3BED /* HomeView.swift */,
 				46B93F582789B44E008B69CD /* DailyView.swift */,
 				46509BDB27652B240079B27B /* WelcomeView.swift */,
-				4631C3EC2789DE28008DBCE8 /* MaximumFlowClass.swift */,
 				462D424B275B680000FC113C /* UserRegistrationModel.swift */,
 				462D4249275B666F00FC113C /* RequirementTextView.swift */,
+				09A5F85D278F182E00E8F21F /* GoogleService-Info.plist */,
+				4631C3EC2789DE28008DBCE8 /* MaximumFlowClass.swift */,
 				46509BDD2765F7190079B27B /* FirebaseManager.swift */,
 				092FA47E278A12A800383FFA /* AddFreeTimeView.swift */,
 				46509BE12765F8F60079B27B /* SignInView.swift */,
-				460697E927719BFC0009CC30 /* GoogleService-Info.plist */,
 				462D4238275B53B500FC113C /* Assets.xcassets */,
 				462D423D275B53B500FC113C /* Info.plist */,
 				462D423A275B53B500FC113C /* Preview Content */,
@@ -219,7 +219,7 @@
 			files = (
 				462D423C275B53B500FC113C /* Preview Assets.xcassets in Resources */,
 				462D4239275B53B500FC113C /* Assets.xcassets in Resources */,
-				460697EA27719BFC0009CC30 /* GoogleService-Info.plist in Resources */,
+				09A5F85E278F182E00E8F21F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

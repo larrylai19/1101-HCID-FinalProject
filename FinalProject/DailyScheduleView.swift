@@ -162,8 +162,6 @@ struct DailyScheduleView: View {
                 })
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
         }
         else{
             VStack{
@@ -280,9 +278,8 @@ struct DailyScheduleView: View {
                             content.title = "Time to Working !"
                             content.subtitle = "\(dBHP.userData[m].k) needs to be done."
                             content.sound = UNNotificationSound.default
-                            var Today = showToday(today: day)
+                            let Today = showToday(today: day)
                             let calendar = Calendar.current
-    //                        let components = DateComponents(year: 2022, month: 01, day: 11, hour: 2, minute: 00) // Set the date here when you want Notification
                             var components = DateComponents()
                             let b = Today.split(separator: "-")
                             components.year = Int(b[0])
@@ -309,8 +306,8 @@ struct DailyScheduleView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+//            .navigationBarTitle("")
+//            .navigationBarHidden(true)
         }
     }
 }

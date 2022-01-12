@@ -499,6 +499,7 @@ struct WelcomeView: View {
 //                Text("Activity:\(dBHP.userData[idx].k)\nLength: \(dBHP.userData[idx].v)\nDeadLine: \(dBHP.userData[idx].l)")
 //            }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
