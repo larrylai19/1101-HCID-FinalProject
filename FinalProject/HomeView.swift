@@ -43,69 +43,6 @@ struct BasicImageRow: View {
     }
 }
 
-struct ScheduleDetailView:View{
-    @Environment(\.presentationMode) var presentationMode
-    var thisActivity:DataDetail
-    var dBHP: DBHelper
-    var body: some View{
-        ScrollView{
-            VStack{
-                Spacer()
-                ZStack {
-                    Rectangle()
-                        .fill(Color(red: 82/255, green: 85/255, blue: 123/255))
-                        .frame(width: 400, height: 300)
-                        .cornerRadius(15.0)
-                        .padding(.top, 0)
-                    Text(thisActivity.k)
-                        //.font(.system(.title, design:.rounded))
-                        .font(.system(size: 40))
-                        .fontWeight(.black)
-                        .foregroundColor(Color.white)
-                        .font(.system(.title, design:.rounded))
-                }
-                HStack {
-                    Text("Length: ")
-                        .font(.system(.title, design:.rounded))
-                        .fontWeight(.black)
-                        .padding(.top, 20)
-                    Text(thisActivity.v)
-                        .font(.system(.title, design:.rounded))
-                        .fontWeight(.black)
-                        .padding(.top, 20)
-                }
-                HStack {
-                    Text("Deadline: ")
-                        .font(.system(.title, design:.rounded))
-                        .fontWeight(.black)
-                        .padding(.top, 20)
-                    Text(thisActivity.l)
-                        .font(.system(.title, design:.rounded))
-                        .fontWeight(.black)
-                        .padding(.top, 20)
-                }
-                
-                Spacer()
-            }
-            .padding()
-            Spacer()
-            Button {
-                dBHP.deleteSingle(pos: thisActivity.eventCnt)
-                self.presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("Delete")
-                    .frame(width: 100, height: 40, alignment: .center)
-                    .background(Color(red: 82/255, green: 85/255, blue: 123/255))
-                    .font(.system(size: 18))
-                    .foregroundColor(.white)
-                    .cornerRadius(10.0)
-                    .padding(.top, 70)
-            }
-            .padding(.bottom, 10)
-        }
-    }
-}
-
 struct ActivityDetailView:View{
     @Environment(\.presentationMode) var presentationMode
     var thisActivity:DataDetail
